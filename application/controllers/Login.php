@@ -40,6 +40,10 @@ class Login extends CI_Controller {
            
            // $this->db->where('user_level', 1);
             $query = $this->db->get_where('users');
+			
+			// print_r($this->db->last_query());
+			// print_r($query->row_array());
+			// die();
 	    
             if ($query->num_rows() > 0) {
             
@@ -64,11 +68,10 @@ class Login extends CI_Controller {
                    'userslug'  => $row['user_slug'],
                    'nome'  => $row['user_name']." ".$row['user_lastname'],
 				   'email'  => $row['user_email'],
+				   'provinsi'  => $row['provinsi'],
+				   'kabupaten'  => $row['kabupaten'],
                    'avatar'  => $row['user_avatar'],
-				    'level'  => $row['user_level'],
-					 'kelompok_tani'  => $row['kelompok_tani'],
-                      'kecamatan'  => $row['kecamatan'],
-                       'desa'  => $row['desa'],
+				   'level'  => $row['user_level'],
                    'logged_in'  => TRUE
                 );
 	
@@ -80,6 +83,12 @@ class Login extends CI_Controller {
 
                         case 2:
                         redirect('/input/');
+
+                        case 3:
+                        redirect('/admin_prov/');
+
+                        case 4:
+                        redirect('/admin/');
                         
                         default: 
                         redirect('/');
@@ -167,6 +176,10 @@ class Login extends CI_Controller {
               
     }
 
+	
+	function see_session(){
+		print_r($this->session->userdata());
+	}
     
 
 	function logout()
