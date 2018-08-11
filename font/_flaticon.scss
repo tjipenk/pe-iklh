@@ -1,0 +1,89 @@
+    /*
+    Flaticon icon font: Flaticon
+    Creation date: 25/08/2017 04:04
+    */
+
+    @font-face {
+  font-family: "Flaticon";
+  src: url("./Flaticon.eot");
+  src: url("./Flaticon.eot?#iefix") format("embedded-opentype"),
+       url("./Flaticon.woff") format("woff"),
+       url("./Flaticon.ttf") format("truetype"),
+       url("./Flaticon.svg#Flaticon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  @font-face {
+    font-family: "Flaticon";
+    src: url("./Flaticon.svg#Flaticon") format("svg");
+  }
+}
+
+    .fi:before{
+        display: inline-block;
+  font-family: "Flaticon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  line-height: 1;
+  text-decoration: inherit;
+  text-rendering: optimizeLegibility;
+  text-transform: none;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-smoothing: antialiased;
+    }
+
+    .flaticon-newspaper:before { content: "\f100"; }
+.flaticon-village:before { content: "\f101"; }
+.flaticon-binoculars:before { content: "\f102"; }
+.flaticon-add:before { content: "\f103"; }
+.flaticon-right-arrow:before { content: "\f104"; }
+.flaticon-left-arrow:before { content: "\f105"; }
+.flaticon-edit:before { content: "\f106"; }
+.flaticon-rubbish:before { content: "\f107"; }
+.flaticon-delete-cross:before { content: "\f108"; }
+.flaticon-substract:before { content: "\f109"; }
+.flaticon-logout:before { content: "\f10a"; }
+.flaticon-list-menu:before { content: "\f10b"; }
+.flaticon-menu:before { content: "\f10c"; }
+.flaticon-controls:before { content: "\f10d"; }
+.flaticon-settings:before { content: "\f10e"; }
+.flaticon-farmer-2:before { content: "\f10f"; }
+.flaticon-farmer-1:before { content: "\f110"; }
+.flaticon-users:before { content: "\f111"; }
+.flaticon-farmer:before { content: "\f112"; }
+.flaticon-sprout:before { content: "\f113"; }
+.flaticon-pictures:before { content: "\f114"; }
+.flaticon-trophy:before { content: "\f115"; }
+.flaticon-download-business-statistics-symbol-of-a-graphic:before { content: "\f116"; }
+.flaticon-tractor-1:before { content: "\f117"; }
+.flaticon-tractor:before { content: "\f118"; }
+    
+    $font-Flaticon-newspaper: "\f100";
+    $font-Flaticon-village: "\f101";
+    $font-Flaticon-binoculars: "\f102";
+    $font-Flaticon-add: "\f103";
+    $font-Flaticon-right-arrow: "\f104";
+    $font-Flaticon-left-arrow: "\f105";
+    $font-Flaticon-edit: "\f106";
+    $font-Flaticon-rubbish: "\f107";
+    $font-Flaticon-delete-cross: "\f108";
+    $font-Flaticon-substract: "\f109";
+    $font-Flaticon-logout: "\f10a";
+    $font-Flaticon-list-menu: "\f10b";
+    $font-Flaticon-menu: "\f10c";
+    $font-Flaticon-controls: "\f10d";
+    $font-Flaticon-settings: "\f10e";
+    $font-Flaticon-farmer-2: "\f10f";
+    $font-Flaticon-farmer-1: "\f110";
+    $font-Flaticon-users: "\f111";
+    $font-Flaticon-farmer: "\f112";
+    $font-Flaticon-sprout: "\f113";
+    $font-Flaticon-pictures: "\f114";
+    $font-Flaticon-trophy: "\f115";
+    $font-Flaticon-download-business-statistics-symbol-of-a-graphic: "\f116";
+    $font-Flaticon-tractor-1: "\f117";
+    $font-Flaticon-tractor: "\f118";

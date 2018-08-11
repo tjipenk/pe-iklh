@@ -1,0 +1,8 @@
+## Query Kab
+SELECT kode as id_kec, LEFT(kode,2) as id_prov, nama as kab FROM `wilayah` WHERE LENGTH(kode)>2
+
+## Query Prov
+SELECT kode as id_prov, nama as prov FROM `wilayah` WHERE LENGTH(kode)<=2
+
+##
+
