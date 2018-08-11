@@ -1,0 +1,78 @@
+{  
+   "error":false,
+   "uid":"2588",
+   "user":{  
+      "name":"Anjas",
+      "email":"anjay",
+      "created_at":"2018-01-23 01:47:51",
+      "updated_at":"2018-01-23 01:47:51",
+      "id_kecamatan":"7",
+      "nama_kecamatan":"Kabuh",
+      "desa":[  
+         {  
+            "nama":"Banjar Dowo",
+            "id":"000000000094"
+         },
+         {  
+            "nama":"Genengan Jasem",
+            "id":"000000000095"
+         },
+         {  
+            "nama":"Kabuh",
+            "id":"000000000096"
+         },
+         {  
+            "nama":"Karang Pakis",
+            "id":"000000000097"
+         },
+         {  
+            "nama":"Kauman",
+            "id":"000000000098"
+         },
+         {  
+            "nama":"Kedung Jati",
+            "id":"000000000099"
+         },
+         {  
+            "nama":"Manduro",
+            "id":"000000000100"
+         },
+         {  
+            "nama":"Mangunan",
+            "id":"000000000101"
+         },
+         {  
+            "nama":"Marmoyo",
+            "id":"000000000102"
+         },
+         {  
+            "nama":"Munung Kerep",
+            "id":"000000000103"
+         },
+         {  
+            "nama":"Pengampon",
+            "id":"000000000104"
+         },
+         {  
+            "nama":"Sukodadi",
+            "id":"000000000105"
+         },
+         {  
+            "nama":"Sumber Gondang",
+            "id":"000000000106"
+         },
+         {  
+            "nama":"Sumberaji",
+            "id":"000000000107"
+         },
+         {  
+            "nama":"Sumberringin",
+            "id":"000000000108"
+         },
+         {  
+            "nama":"Tanjung Wadung",
+            "id":"000000000109"
+         }
+      ]
+   }
+}
