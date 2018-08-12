@@ -57,25 +57,39 @@ private $user_id = "";
 		$this->load->view('admin/ajaxcontent/loadUsers', $data);
 	}
 
-	public function kelompok_tani()
-	{
-		$sel['sel'] = "users";
+	public function user_list_ajax()
+    {
+        $list = $this->customers->get_datatables();
+        $data = array();
+		$no = $_POST['start'];
+		//print_r($data);
+        foreach ($list as $customers) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $customers->user_name;
+            $row[] = $customers->user_lastname;
+            $row[] = $customers->user_slug;
+            $nama_kecamatan =  $this->admin_model->get_nama_wilayah($customers->provinsi);
+            $row[] = $nama_kecamatan[0]['nama'];
+          if($this->session->userdata('logged_in')) {
+         	$row[] = "<a class='btn btn-biru' href='".base_url()."admin/edit_user/".$customers->user_id."'>Edit</a> ";
+
+     	}
+ 
+            $data[] = $row;
+        }
+ 
+        $output = array(
+                        "draw" => $_POST['draw'],
+                        "recordsTotal" => $this->customers->count_all(),
+                        "recordsFiltered" => $this->customers->count_filtered(),
+                        "data" => $data,
+                );
+        //output to json format
+        echo json_encode($output);
+	}
 	
-		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/kelompok_tani',$data);
-        $this->load->view('layout/footer');
-	}
-
-	public function load_kelompok_tani()
-	{
-		$p = $this->input->post('p');
-		
-		$data['users'] = $this->admin_model->get_kelompok_tani('', $p, '', 'all');		
-		
-		$this->load->view('admin/ajaxcontent/loadUsers', $data);
-	}
-
 	function adduser() {
 		$sel['sel'] = "users";
 
