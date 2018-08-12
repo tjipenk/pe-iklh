@@ -42,6 +42,10 @@
         <script src="<?php echo base_url(); ?>js/bootstrap.min.js"></script>
         <script src="<?php echo base_url(); ?>js/backend/main.min.js"></script>
         <script src="<?php echo base_url(); ?>js/backend/pnotify.custom.min.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/datatables.min.css"/>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/datatables.min.js"></script>
+
 
 		<style>
 		body{
