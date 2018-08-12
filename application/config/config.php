@@ -432,7 +432,8 @@ $config['csrf_cookie_name'] = 'csrf_cookie_name';
 $config['csrf_expire'] = 7200;
 $config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array('admin/user_list','dashboard/ajax_list','dashboard/luas_tanam_ajax_list',
-'dashboard/luas_panen_ajax_list','dashboard/berat_panen_ajax_list','dashboard/edit_luas_tanam','dashboard/edit_berat_panen','dashboard/edit_luas_panen','dashboard/delete_luas_tanam','api/login','api/tambah_data','api/tambah_dinamika');
+'dashboard/luas_panen_ajax_list','dashboard/berat_panen_ajax_list','dashboard/edit_luas_tanam','dashboard/edit_berat_panen','dashboard/edit_luas_panen','dashboard/delete_luas_tanam','api/login','api/tambah_data','api/tambah_dinamika',
+'admin/user_list');
 
 /*
 |--------------------------------------------------------------------------

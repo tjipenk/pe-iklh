@@ -218,7 +218,7 @@ if($this->session->userdata('logged_in')) {
 
              $kecamatan = preg_replace('/[^0-9\-]/', '', $this->input->post('kecamatan', TRUE));
 
- $id_user = $this->input->post('id_user');
+            $id_user = $this->input->post('id_user');
           
             $slug = url_title($this->input->post('slug'),'dash',TRUE);
             $password = $this->input->post('password');

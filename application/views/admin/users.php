@@ -58,7 +58,7 @@ $(document).ready(function() {
  
         // Load data for the table's content from an Ajax source
         "ajax": {
-            "url": "<?php echo site_url('admin/ajax_user_list')?>",
+            "url": "<?php echo site_url('admin/user_list')?>",
             "type": "POST"
         },
  
