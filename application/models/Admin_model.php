@@ -237,17 +237,6 @@ class Admin_model extends CI_Model
 		$query = $this->db->query("SELECT kode as id_kab, LEFT(kode,2) as id_prov, nama as kab FROM `wilayah` WHERE LENGTH(kode)>2");
 	    return $query->result_array(); 
 	}
-	
-	function data_petugas($id) {
-		$this->db->select('*');
-		$this->db->from('users');
-	
-		$this->db->where("user_id='$id'");
-		$query = $this->db->get();
-	    return $query->result_array(); 
-	}
-
-
 
 	public function data_provinsi()
 	{
