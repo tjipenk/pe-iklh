@@ -42,4 +42,21 @@
 		$('input[name=pubpesquisar]').change(function() { $('#usersform').submit(); });
 		$('#usersform').submit();
 	});
+	
+	function delete_sungai(id){
+		var result = confirm("Yakin dihapus?");
+		if (result) {
+			//Logic to delete the item
+			var p = $(this).find('input[name=pubpesquisar]').val();
+						
+			$.post("<?php echo base_url(); ?>admin_prov/removesungai", {
+			i:id,
+			<?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'				
+			},
+			function(data){
+				alert("Berhasil Dihapus.");
+				location.reload();
+			});
+		}
+	}
 </script>

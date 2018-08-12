@@ -1,27 +1,54 @@
 
-									<table class="table datatable table-striped" id="datatable">
+									<table class="" id="datatable">
                                         <thead>
                                             <tr>
-                                                <th colspan="2" align="right">Option</th>
-                                                <th>Kode Sungai</th>
-                                                <th class="hidden-sd hidden-xs">Provinsi</th>
-												<th class="hidden-sd hidden-xs">Koordinat</th>
-												<th class="hidden-sd hidden-xs">Lokasi</th>
+                                                <th align="right">Option</th>
+                                                <th hidden>Provinsi</th>
+                                                <th>Lokasi</th>
+                                                <th>Tanggal</th>
+                                                <th>TSS</th>
+												<th>DO</th>
+												<th>BOD</th>
+												<th>COD</th>
+												<th>T-F</th>
+												<th>Fecal Coli</th>
+												<th>Total Coli</th>
+												<th>IKA</th>
+                                                
+
                                             </tr>
                                         </thead>
                                         <tbody>
                                             
 										<?php if (count($sungai)>0): ?>
                                             <?php foreach($sungai as $pub): ?>
-                                                <tr data-id="<?php echo $pub['id']; ?>">
-                                                    <td><a style="cursor:pointer;" class="removerutilizador"><span class="label label-danger">Hapus</span></a></td>
-                                                    <td><a style="cursor:pointer;" class="editstory" href="<?php echo base_url(); ?>admin/editsungai/<?php echo $pub['id']; ?>"><span class="label label-warning">Edit</span></a></td>
-                                                    <td><?php echo $pub['sungai']; ?></td>
-                                                    <td class="hidden-sd hidden-xs"><?php echo $this->admin_model->get_nama_wilayah($pub['id_prov'])[0]['nama']; ?></td>
-                                                   													
-                                                    <td class="hidden-sd hidden-xs"><?php echo $pub['lintang']."; ".$pub['bujur']; ?></td>															
-                                                    <td class="hidden-sd hidden-xs"><?php echo $pub['lokasi']; ?></td>															
-                                                </tr>       
+                                                <tr data-id="<?php echo $pub['id_sungai']; ?>">
+													<?php
+														if($pub['validated'] == 0){
+													?>
+                                                            <td class=""><a style="cursor:pointer;" class="removerutilizador" onclick="reject(<?=$pub['id_sungai']?>)"><span class="label label-danger">Tolak</span></a> | <a style="cursor:pointer;" class="editstory" onclick="validate(<?=$pub['id_sungai']?>)"><span class="label label-warning">Validasi</span></a></td>
+                                                            
+													<?php
+														}
+														else{
+													?>
+															<td><i>Tervalidasi</i></td>
+													<?php
+														}
+													?>
+                                                            <td hidden><?php echo $pub['nama']; ?></td>
+                                                            <td><?php echo $pub['lokasi']; ?></td>
+                                                            <td><?php echo $pub['tanggal']; ?></td>
+                                                            <td><?php echo $pub['tss'];?></td>
+                                                            <td><?php echo $pub['do'];?></td>																				
+                                                            <td><?php echo $pub['bod'];?></td>																				
+                                                            <td><?php echo $pub['cod'];?></td>																				
+                                                            <td><?php echo $pub['tf'];?></td>																				
+                                                            <td><?php echo $pub['fcoli'];?></td>
+                                                            <td><?php echo $pub['tcoli'];?></td>																				
+                                                            																				
+                                                            <td><?php echo ($this->admin_model->hitung_ika($pub['id_sungai'])['ika'] ); ?></td>															
+                                                        </tr>        
                                             <?php endforeach; ?>
                                         <?php endif; ?>
                                         </tbody>

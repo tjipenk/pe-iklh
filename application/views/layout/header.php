@@ -45,7 +45,17 @@
 		
 		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/datatables.min.css"/>
 		<script type="text/javascript" src="<?php echo base_url(); ?>assets/datatables.min.js"></script>
-
+		<script type="text/javascript" src=""></script>
+		
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/DataTables-1.10.18/css/jquery.dataTables.min.css"/>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/Buttons-1.5.2/css/buttons.dataTables.min.css"/>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/Buttons-1.5.2/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/Buttons-1.5.2/js/buttons.flash.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/Buttons-1.5.2/js/buttons.html5.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/pdfmake-0.1.36/pdfmake.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/pdfmake-0.1.36/vfs_fonts.js"></script>
+		
 
 		<style>
 		body{

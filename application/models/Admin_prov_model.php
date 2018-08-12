@@ -66,12 +66,18 @@ class Admin_prov_model extends CI_Model
 
 	public function get_data_sungai($offset = null, $search = "", $filter = "Popular", $all = "") 
 	{
-		$this->db->order_by("kode_sungai", "desc");			
+		# get prov
+		$id_prov = $this->session->userdata("provinsi");
+		
+		$this->db->order_by("kode_sungai", "desc");		
+		$this->db->like('id_prov', $id_prov);		
 		
 		if (strlen($search)>1) {
 			$this->db->like('lokasi', $search);			
 		}
 			#$this->db->where('user_level', 0);
+			
+			$this->db->join('wilayah', 'wilayah.kode = tbl_sungai.id_prov');
 			
 		if ($all == "all") { $query = $this->db->get('tbl_sungai'); } else { $query = $this->db->get('tbl_sungai', 10, $offset); }
 		return $query->result_array();
@@ -233,14 +239,14 @@ class Admin_prov_model extends CI_Model
 
 	public function data_lokasi()
 	{
-		$query = $this->db->query("SELECT * FROM `st_air`");
+		$query = $this->db->query("SELECT * FROM `st_air` WHERE `id_prov` = ".$this->session->userdata("provinsi"));
 	    return $query->result_array(); 
 	}
 
 	public function data_kabupaten()
 	{
 		$id_prov = $this->session->userdata("provinsi");
-		$query = $this->db->query("SELECT kode as id_kab, LEFT(kode,2) as id_prov, nama as kab FROM `wilayah` WHERE LENGTH(kode)>2 and LEFT(kode,2) = $id_prov");
+		$query = $this->db->query("SELECT kode as id_kab, LEFT(kode,2) as id_prov, nama as kab FROM `wilayah` WHERE LENGTH(kode)>2 and LEFT(kode,2) = $id_prov AND LEFT(kode,2) = ".$this->session->userdata("provinsi"));
 	    return $query->result_array(); 
 	}
 
