@@ -57,39 +57,7 @@ private $user_id = "";
 		$this->load->view('admin/ajaxcontent/loadUsers', $data);
 	}
 
-	public function user_list_ajax()
-    {
-        $list = $this->customers->get_datatables();
-        $data = array();
-		$no = $_POST['start'];
-		//print_r($data);
-        foreach ($list as $customers) {
-            $no++;
-            $row = array();
-            $row[] = $no;
-            $row[] = $customers->user_name;
-            $row[] = $customers->user_lastname;
-            $row[] = $customers->user_slug;
-            $nama_kecamatan =  $this->admin_model->get_nama_wilayah($customers->provinsi);
-            $row[] = $nama_kecamatan[0]['nama'];
-          if($this->session->userdata('logged_in')) {
-         	$row[] = "<a class='btn btn-biru' href='".base_url()."admin/edit_user/".$customers->user_id."'>Edit</a> ";
 
-     	}
- 
-            $data[] = $row;
-        }
- 
-        $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->customers->count_all(),
-                        "recordsFiltered" => $this->customers->count_filtered(),
-                        "data" => $data,
-                );
-        //output to json format
-        echo json_encode($output);
-	}
-	
 	function adduser() {
 		$sel['sel'] = "users";
 
@@ -421,8 +389,8 @@ private $user_id = "";
             $row[] = $customers->user_name;
             $row[] = $customers->user_lastname;
             $row[] = $customers->user_slug;
-            $nama_kecamatan =  $this->dashboard_model->nama_kecamatan($customers->kecamatan);
-        $row[] = $nama_kecamatan[0]['nama'];
+            $nama_kecamatan =  $this->admin_model->get_nama_wilayah($customers->provinsi);
+        	$row[] = $nama_kecamatan[0]['nama'];
           if($this->session->userdata('logged_in')) {
          	$row[] = "<a class='btn btn-biru' href='".base_url()."admin/edit_user/".$customers->user_id."'>Edit</a> ";
 
