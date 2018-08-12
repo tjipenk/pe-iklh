@@ -10,6 +10,8 @@ private $user_id = "";
 		$this->load->model('stories_model');
 		$this->load->model('dashboard_model');
 		$this->load->model('customer_model','customers');
+		$this->load->model('user_model');
+		
 
 		$this->user_id = $this->session->userdata('userid');
 		if (!$this->admin_model->check_admin()) redirect('/', 'location'); //die("admin only");
@@ -367,7 +369,7 @@ private $user_id = "";
 	
 
 	function edit_user($id){
-		$data['kecamatan']    = $this->dashboard_model->data_kecamatan();
+		$data['provinsi']    = $this->admin_model->data_provinsi();
 		$petugas = $this->dashboard_model->data_petugas($id);
 		
  		$data['petugas']= $petugas[0];
@@ -412,8 +414,8 @@ private $user_id = "";
 
 	public function register()
 	{
-		$data['kecamatan']    = $this->dashboard_model->data_kecamatan();
- 
+		$data['provinsi']    = $this->admin_model->data_provinsi();
+		
 		$sel['sel'] = "users";
 	
         $this->load->helper('captcha');
@@ -434,6 +436,7 @@ private $user_id = "";
 		$this->load->view('admin/register', $data);
 		$this->load->view('layout/footer');
 	}
+
 	function registerdata()
     {             
 
@@ -441,7 +444,7 @@ private $user_id = "";
             $name = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('name', TRUE));
             $lastname = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('lastname', TRUE));
 
-             $kecamatan = preg_replace('/[^0-9\-]/', '', $this->input->post('kecamatan', TRUE));
+             $provinsi = preg_replace('/[^0-9\-]/', '', $this->input->post('provinsi', TRUE));
 
 
           
@@ -521,7 +524,7 @@ private $user_id = "";
                 $datains['user_pass'] = $passwordins;
                  $datains['user_level'] = 2;
 				$datains['user_salt'] = $salt;
-                $datains['kecamatan'] = $kecamatan;
+                $datains['provinsi'] = $provinsi;
                 $datains['user_date'] = date('Y-m-d G:i:s');
                 $result = $this->user_model->insert_user($datains);
 
@@ -543,7 +546,7 @@ private $user_id = "";
             $name = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('name', TRUE));
             $lastname = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('lastname', TRUE));
 
-             $kecamatan = preg_replace('/[^0-9\-]/', '', $this->input->post('kecamatan', TRUE));
+             $provinsi = preg_replace('/[^0-9\-]/', '', $this->input->post('provinsi', TRUE));
 
  			$id_user = $this->input->post('id_user');
           
@@ -609,7 +612,7 @@ private $user_id = "";
                
            
                
-                $datains['kecamatan'] = $kecamatan;
+                $datains['provinsi'] = $provinsi;
                 $this->db->where('user_id', $id_user);
                  $this->db->update('users', $datains);
               

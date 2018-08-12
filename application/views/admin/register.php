@@ -6,7 +6,7 @@
                         <h3>Tambah petugas</h3>
                         <br />
                         <i class="user-img icons-faces-users-03"></i>
-                        <?php echo form_open(base_url()."/user/registerdata",array("method"=>"POST"));?>
+                        <?php echo form_open(base_url()."/admin/registerdata",array("method"=>"POST"));?>
                  
                             <div class="row" style="margin-top:10px;">
                                 <div class="col-sm-6">
@@ -28,14 +28,14 @@
                             
 
                             <div class="append-icon" style="margin-top:10px;">
-                                <p>Kecamatan tempat bertugas
-                                <select name="kecamatan"  class="form-control form-white password">
+                                <p>Provinsi tempat bertugas
+                                <select name="Provinsi"  class="form-control form-white password">
                                    <?php
 
-                                   foreach ($kecamatan as $key => $value) {
+                                   foreach ($provinsi as $key => $value) {
                                     ?>
 
-                                        <option value="<?php echo $value['id'];?>"><?php echo $value['nama'];?></option>
+                                        <option value="<?php echo $value['id_prov'];?>"><?php echo $value['prov'];?></option>
                                     <?php
                                        # code...
                                    }
