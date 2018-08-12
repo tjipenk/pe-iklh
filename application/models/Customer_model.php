@@ -4,8 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Customer_model extends CI_Model {
  
     var $table = 'users';
-    var $column_order = array(null, 'user_name','user_lastname','kecamatan','user_slug'); //set column field database for datatable orderable
-    var $column_search = array('user_name','user_lastname','kecamatan','user_slug'); //set column field database for datatable searchable 
+    var $column_order = array(null, 'user_name','user_lastname','provinsi','user_slug'); //set column field database for datatable orderable
+    var $column_search = array('user_name','user_lastname','provinsi','user_slug'); //set column field database for datatable searchable 
     var $order = array('user_id' => 'asc'); // default order 
  
     public function __construct()
@@ -16,7 +16,7 @@ class Customer_model extends CI_Model {
  
     private function _get_datatables_query()
     {
-          $this->db->where("user_level",2);
+        //  $this->db->where("user_level",2);
         $this->db->from($this->table);
     
         $i = 0;
@@ -58,7 +58,7 @@ class Customer_model extends CI_Model {
         $this->_get_datatables_query();
         if($_POST['length'] != -1)
         $this->db->limit($_POST['length'], $_POST['start']);
-    $this->db->where("user_level",2);
+     //   $this->db->where("user_level",2);
         $query = $this->db->get();
         return $query->result();
     }
