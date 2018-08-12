@@ -21,7 +21,7 @@
                     <th>Nama depan</th>
                     <th>Nama beakang</th>
                     <th>Username</th>
-                   <th>Provinsi</th>
+                   <th>Kecamatan</th>
                       <?php if($this->session->userdata('logged_in')) { ?>
 <th>Action</th>
                      <?php } ?>
@@ -58,7 +58,7 @@ $(document).ready(function() {
  
         // Load data for the table's content from an Ajax source
         "ajax": {
-            "url": "<?php echo site_url('admin/user_list')?>",
+            "url": "<?php echo site_url('dashboard/ajax_list')?>",
             "type": "POST"
         },
  
@@ -82,7 +82,7 @@ $("#submit").click(function(){
 
     $.ajax({
       method: "POST",
-      url: '<?php echo base_url();?>admin/edituser',
+      url: '<?php echo base_url();?>dashboard/edit_berat_panen',
       data: { 'id':id_tanam,'berat_tanam':luas_tanam }
     })
   .done(function( msg ) {

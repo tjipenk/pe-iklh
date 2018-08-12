@@ -407,9 +407,9 @@ private $user_id = "";
             $row[] = $customers->user_name;
             $row[] = $customers->user_lastname;
             $row[] = $customers->user_slug;
-        	$nama_kecamatan =  $this->admin_model->get_nama_wilayah($customers->provinsi);
-        //	$row[] = $nama_kecamatan[0]['nama'];
-          	if($this->session->userdata('logged_in')) {
+            $nama_kecamatan =  $this->dashboard_model->nama_kecamatan($customers->kecamatan);
+        $row[] = $nama_kecamatan[0]['nama'];
+          if($this->session->userdata('logged_in')) {
          	$row[] = "<a class='btn btn-biru' href='".base_url()."admin/edit_user/".$customers->user_id."'>Edit</a> ";
 
      	}

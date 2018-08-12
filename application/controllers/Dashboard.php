@@ -368,8 +368,8 @@ class Dashboard extends CI_Controller {
             $row[] = $customers->user_name;
             $row[] = $customers->user_lastname;
             $row[] = $customers->user_slug;
-            //$nama_kecamatan =  $this->dashboard_model->nama_kecamatan($customers->provinsi);
-            //$row[] = $nama_kecamatan[0]['nama'];
+            $nama_kecamatan =  $this->dashboard_model->nama_kecamatan($customers->kecamatan);
+        $row[] = $nama_kecamatan[0]['nama'];
           if($this->session->userdata('logged_in')) {
          	$row[] = "<a class='btn btn-biru' href='".base_url()."dashboard/edit_user/".$customers->user_id."'>Edit</a> ";
 
