@@ -1,27 +1,27 @@
+<!-- application/controllers/Lap_prov.php -->
+
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Admin extends CI_Controller {
+class Lap_prov extends CI_Controller {
 private $user_id = "";
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('admin_model');
+		$this->load->model('lap_prov_model');
 		$this->load->model('stories_model');
 		$this->load->model('dashboard_model');
 		$this->load->model('customer_model','customers');
-		$this->load->model('user_model');
-		
 
 		$this->user_id = $this->session->userdata('userid');
-		if (!$this->admin_model->check_admin()) redirect('/', 'location'); //die("admin only");
+		if (!$this->lap_prov_model->check_admin()) redirect('/', 'location'); //die("admin only");
         
 	}
     /* dashboard */
 	public function index() 
 	{
 	//	redirect('/admin/dashboard', 'location');
-		redirect('/admin/daftar_sungai', 'location');
+		redirect('/lap_prov/daftar_sungai', 'location');
 
 	}
 	public function dashboard()
@@ -38,76 +38,14 @@ private $user_id = "";
 		
         $this->load->view('layout/footer');
     }
-	/* users menu */
-	
-	public function users()
-	{
-		$sel['sel'] = "users";
-
-		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/users');
-        $this->load->view('layout/footer');
-	}
-
-	public function loadusers()
-	{
-		$p = $this->input->post('p');
-		
-		$data['users'] = $this->admin_model->get_users('', $p, '', 'all');		
-		
-		$this->load->view('admin/ajaxcontent/loadUsers', $data);
-	}
-
-	public function user_list_ajax()
-    {
-        $list = $this->customers->get_datatables();
-        $data = array();
-		$no = $_POST['start'];
-		//print_r($data);
-        foreach ($list as $customers) {
-            $no++;
-            $row = array();
-            $row[] = $no;
-            $row[] = $customers->user_name;
-            $row[] = $customers->user_lastname;
-            $row[] = $customers->user_slug;
-            $nama_kecamatan =  $this->admin_model->get_nama_wilayah($customers->provinsi);
-            $row[] = $nama_kecamatan[0]['nama'];
-          if($this->session->userdata('logged_in')) {
-         	$row[] = "<a class='btn btn-biru' href='".base_url()."admin/edit_user/".$customers->user_id."'>Edit</a> ";
-
-     	}
- 
-            $data[] = $row;
-        }
- 
-        $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->customers->count_all(),
-                        "recordsFiltered" => $this->customers->count_filtered(),
-                        "data" => $data,
-                );
-        //output to json format
-        echo json_encode($output);
-	}
-	
-	function adduser() {
-		$sel['sel'] = "users";
-
-		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/useradd');
-        $this->load->view('layout/footer');
-	}
 
 	public function daftar_sungai()
 	{
 		$sel['sel'] = "daftar_sungai";
 	
 		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/daftar_sungai');
+        $this->load->view('layout/navigation_lapprov', $sel);
+        $this->load->view('lapprov/daftar_sungai');
         $this->load->view('layout/footer');
 	}
 
@@ -116,16 +54,16 @@ private $user_id = "";
 	public function load_sungai()
 	{
 		$p = $this->input->post('p');
+		$id_prov = $this->session->userdata('provinsi');
+		$data['sungai'] = $this->lap_prov_model->get_lokasi_sungai('', $p, '', 'all', $id_prov);		
 		
-		$data['sungai'] = $this->admin_model->get_lokasi_sungai('', $p, '', 'all');		
-		
-		$this->load->view('admin/ajaxcontent/loadSungai', $data);
+		$this->load->view('lapprov/ajaxcontent/loadSungai', $data);
 	}
 
 	function add_sungai() {
 		$sel['sel'] = "sungai";
-		$data['provinsi'] 		= $this->admin_model->data_provinsi();
-		$data['kabupaten'] 			= $this->admin_model->data_kabupaten();
+		$data['provinsi'] 			= $this->lap_prov_model->data_provinsi();
+		$data['kabupaten'] 			= $this->lap_prov_model->data_kabupaten();
 		$this->load->library('googlemaps');
 
 		$config['center'] = '	-6.2069063, 106.797554';
@@ -142,7 +80,7 @@ private $user_id = "";
 		
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/add_sungai',$data);
+        $this->load->view('lapprov/add_sungai',$data);
         $this->load->view('layout/footer');
 	}
 
@@ -156,16 +94,27 @@ private $user_id = "";
 
 	function editsungai($i) {
 		$sel['sel'] = "sungai";
-		$data['provinsi'] 		= $this->admin_model->data_provinsi();
-		$data['kabupaten'] 			= $this->admin_model->data_kabupaten();
-		$data['stories'] = $this->admin_model->get_specific_sungai($i);
+		$id_prov 				= $this->session->userdata('provinsi');
+		$data['provinsi'] 		= $this->lap_prov_model->data_provinsi($id_prov);
+		$data['kabupaten'] 		= $this->lap_prov_model->data_kabupaten($id_prov);
+		//$data['provinsi'] 			= $this->lap_prov_model->data_provinsi();
+		//$data['kabupaten'] 			= $this->lap_prov_model->data_kabupaten();
+		$data['stories'] 		= $this->lap_prov_model->get_specific_sungaidata($i);
 
 		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/sungaiedit', $data);
+        $this->load->view('layout/navigation_lapprov', $sel);
+        $this->load->view('lapprov/edit_sungai', $data);
         $this->load->view('layout/footer');
 	}
-
+	public function removesungaidata($i)
+	{		
+		//if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;		
+		$i = $this->input->post('i');
+		$this->db->where(array("id_sungai"=>$i));
+		$this->db->delete("tbl_sungai");
+		//echo "<pre>";print_r($i);echo "</pre>";exit();
+		//echo "delete";	
+	}
 	public function sungaieditdata() {
 		
 			if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;	
@@ -195,24 +144,53 @@ private $user_id = "";
 			
 			echo "edit";	 
 	}
+	function edit_data_sungaidata() 
+	{
+			$id 	=	$_POST['id_sungai'];
+			$tss 	=	$_POST['tss'];
+			$do 	=	$_POST['do'];
+			$bod 	=	$_POST['bod'];
+			$cod 	=	$_POST['cod'];
+			$tf 	=	$_POST['tp'];
+			$fcoli 	=	$_POST['fcoli'];
+			$tcoli 	=	$_POST['tcoli'];
+			
+			
+			$deskripsi 	=  $_POST['deskripsi'];
 
+			$datains2['tss'] = $tss;
+            $datains2['do'] = $do;
+            $datains2['bod'] = $bod;
+           	$datains2['cod'] = $cod;
+           	$datains2['tf'] = $tf;
+           	$datains2['fcoli'] = $fcoli;
+			$datains2['tcoli'] = $tcoli;
+			$datains2['ket'] = $deskripsi;
+			#echo "<pre>";print_r($datains2);echo "</pre>";exit();
+			$this->db->where('id_sungai', $id);
+			$this->db->update('tbl_sungai', $datains2); 
+			
+			//print_r($datains2);
+			
+			echo "add";	 
+	}
 	public function data_sungai()
 	{
 		$sel['sel'] = "data_sungai";
 	
 		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/data_sungai');
+        $this->load->view('layout/navigation_lapprov', $sel);
+        $this->load->view('lapprov/data_sungai');
         $this->load->view('layout/footer');
 	}
 
 	public function load_data_sungai()
 	{
 		$p = $this->input->post('p');
+		$id_prov = $this->session->userdata('provinsi');
+		$data['sungai'] = $this->lap_prov_model->get_data_sungai('', $p, '', 'all', $id_prov);		
 		
-		$data['sungai'] = $this->admin_model->get_data_sungai('', $p, '', 'all');		
-		
-		$this->load->view('admin/ajaxcontent/loadDataSungai', $data);
+		$this->load->view('lapprov/ajaxcontent/loadDataSungai', $data);
 	}
 
 	public function parameter_sungai()
@@ -289,9 +267,10 @@ private $user_id = "";
 
 	function add_data_sungai() {
 		$sel['sel'] = "sungai";
-		$data['provinsi'] 		= $this->admin_model->data_provinsi();
-		$data['kabupaten'] 			= $this->admin_model->data_kabupaten();
-		$data['lokasi'] 			= $this->admin_model->data_lokasi();
+		$id_prov = $this->session->userdata('provinsi');
+		$data['provinsi'] 		= $this->lap_prov_model->data_provinsi($id_prov);
+		$data['kabupaten'] 			= $this->lap_prov_model->data_kabupaten($id_prov);
+		$data['lokasi'] 			= $this->lap_prov_model->data_lokasi($id_prov);
 
 		/* $this->load->library('googlemaps');
 
@@ -307,24 +286,27 @@ private $user_id = "";
 		$data['map'] = $this->googlemaps->create_map();
 		*/
 		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/add_data_sungai',$data);
+        $this->load->view('layout/navigation_lapprov', $sel);
+        $this->load->view('lapprov/add_data_sungai',$data);
         $this->load->view('layout/footer');
 	}
 
 	function add_data_sungaidata() 
 	{
 			$kategori   =  $_POST['kategori'];
-			$tanggal =  $_POST['tanggal'];
+			$tanggal 	=  $_POST['tanggal'];
+			$id_prov 	= $this->session->userdata('provinsi');
+			$id_kab 	= $this->session->userdata('kabupaten');
+			$level 		=  4;
 			
-			$level 		=  3;
-			
-			$provinsi 	= $_POST['provinsi'];
+			//$provinsi 	= $_POST['provinsi'];
+			$provinsi 	= $id_prov;
+			$kabupaten 	= $id_kab;
 			$id_sungai 	= $_POST['lokasi'];
 
-			$info_sungai = $this->admin_model->get_specific_sungai($id_sungai);
+			$info_sungai = $this->lap_prov_model->get_specific_sungai($id_sungai);
 			
-			$kabupaten = $info_sungai[0]['id_kab'];
+			//$kabupaten = $info_sungai[0]['id_kab'];
 			$lokasi = $info_sungai[0]['lokasi'];
 			$sungai = $info_sungai[0]['sungai'];
 			$bujur = $info_sungai[0]['bujur'];
@@ -344,6 +326,7 @@ private $user_id = "";
 
 			$datains2['lokasi'] = $lokasi;
 			$datains2['kode_sungai'] = $sungai;
+			$datains2['tanggal'] = $tanggal;
 			$datains2['id_prov'] = $provinsi;
 			$datains2['id_kab'] = $kabupaten;
 			$datains2['kategori'] = $kategori;
@@ -358,308 +341,13 @@ private $user_id = "";
            	$datains2['fcoli'] = $fcoli;
 			$datains2['tcoli'] = $tcoli;
 			$datains2['ket'] = $deskripsi;
-			
+			#echo "<pre>";print_r($datains2);echo "</pre>";exit();
 			$this->db->insert('tbl_sungai', $datains2); 
 
 			print_r($datains2);
 			
 			echo "add";	 
 	}
-
-	function add_kelompok_tani() {
-		$sel['sel'] = "users";
-		$data['kecamatan'] 		= $this->dashboard_model->data_kecamatan();
-		$data['desa'] 			= $this->dashboard_model->data_desa();
-		$this->load->library('googlemaps');
-
-		$config['center'] = '	-7.546839, 112.226479';
-		$config['zoom'] = '12';
-		$this->googlemaps->initialize($config);
-
-		$marker = array();
-		$marker['position'] = '	-7.546839,  112.226479';
-		$marker['draggable'] = true;
-		$marker['ondragend'] = '$("#latitude").val(event.latLng.lat());$("#longitude").val(event.latLng.lng());';
-		$this->googlemaps->add_marker($marker);
-		$data['map'] = $this->googlemaps->create_map();
-		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/add_kelompok_tani',$data);
-        $this->load->view('layout/footer');
-	}
-
-	public function petugas(){
-		$this->load->helper('url');
-		$sel['sel'] = "users";
-	
-		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-	    $this->load->view('admin/users',$data);
-	    $this->load->view('layout/footer');	
-	}
-
-	
-
-	function edit_user($id){
-		$data['provinsi']    = $this->admin_model->data_provinsi();
-		$petugas = $this->dashboard_model->data_petugas($id);
-		
- 		$data['petugas']= $petugas[0];
-		$this->load->helper('url');
-		$this->load->view('layout', $data);
-	    $this->load->view('edit_user', $data);
-	    $this->load->view('layout');	
-	}
-
-	public function user_list()
-    {
-        $list = $this->customers->get_datatables();
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $customers) {
-            $no++;
-            $row = array();
-            $row[] = $no;
-            $row[] = $customers->user_name;
-            $row[] = $customers->user_lastname;
-            $row[] = $customers->user_slug;
-            $nama_kecamatan =  $this->dashboard_model->nama_kecamatan($customers->kecamatan);
-        $row[] = $nama_kecamatan[0]['nama'];
-          if($this->session->userdata('logged_in')) {
-         	$row[] = "<a class='btn btn-biru' href='".base_url()."admin/edit_user/".$customers->user_id."'>Edit</a> ";
-
-     	}
- 
-            $data[] = $row;
-        }
- 
-        $output = array(
-                        "draw" => $_POST['draw'],
-                        "recordsTotal" => $this->customers->count_all(),
-                        "recordsFiltered" => $this->customers->count_filtered(),
-                        "data" => $data,
-                );
-        //output to json format
-        echo json_encode($output);
-    }
-
-
-	public function register()
-	{
-		$data['provinsi']    = $this->admin_model->data_provinsi();
-		
-		$sel['sel'] = "users";
-	
-        $this->load->helper('captcha');
-        $random_number = substr(number_format(time() * rand(),0,'',''),0,6);
-          $vals = array(
-                 'word' => $random_number,
-                 'img_path' => './captcha/',
-                 'img_url' => base_url().'captcha/',
-                 'img_width' => 140,
-                 'img_height' => 32,
-                 'expiration' => 7200
-                );
-        $data['captcha'] = create_captcha($vals);
-        $this->session->set_userdata('captchaWord',$data['captcha']['word']);
-
-        $this->load->view('layout/header');
-		$this->load->view('layout/navigation', $sel);
-		$this->load->view('admin/register', $data);
-		$this->load->view('layout/footer');
-	}
-
-	function registerdata()
-    {             
-
-
-            $name = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('name', TRUE));
-            $lastname = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('lastname', TRUE));
-
-             $provinsi = preg_replace('/[^0-9\-]/', '', $this->input->post('provinsi', TRUE));
-
-
-          
-            $slug = url_title($this->input->post('slug'),'dash',TRUE);
-            $password = $this->input->post('password');
-            $password2 = $this->input->post('password2');
-            $newsletter = $this->input->post('newsletter');
-            $terms = $this->input->post('terms');
-
-            $this->load->helper('captcha');
-            $userCaptcha = $this->input->post('userCaptcha');
-
-            $arr['result'] = 'confirm';
-            $arr['message'] = '<ul>';
-
-            $datains = array();
-            $newsins = array();
-
-            $arr['result'] = 'confirm';
-            $arr['message'] = '<ul>';
-
-          
-            if (strlen($name) == 0) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('fillname').'</li>';
-            }
-
-            if (strlen($lastname) == 0) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('lastname').'</li>';
-            }
-
-            if (strlen($slug) == 0) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('slug').'</li>';
-            }
-
-        
-
-            if (strlen($password) == 0) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('fillpassword').'</li>';
-            }
-
-            if (strlen($password2) == 0) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('fillcpassword').'</li>';
-            }
-
-            if (($password) != ($password2)) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('passwordequal').'</li>';
-            }
-
-            if ($this->user_model->slug_exists($slug)) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('slugexists').'</li>';
-            }
-
-            if ($this->user_model->email_exists($email)) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('emailexists').'</li>';
-            }
-            
-
-            if ($arr['result'] != 'error') 
-            {
-
-				$salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-				$passwordins = hash('sha256', $password . $salt); 
-				for($round = 0; $round < 65536; $round++){ $passwordins = hash('sha256', $passwordins . $salt); }
-		
-                $datains['user_name'] = $name;
-                $datains['user_slug'] = $slug;
-                $datains['user_lastname'] = $lastname;
-                //$datains['user_email'] = $email;
-                $datains['user_pass'] = $passwordins;
-                 $datains['user_level'] = 2;
-				$datains['user_salt'] = $salt;
-                $datains['provinsi'] = $provinsi;
-                $datains['user_date'] = date('Y-m-d G:i:s');
-                $result = $this->user_model->insert_user($datains);
-
-                redirect("/dashboard/petugas");
-                
-
-            
-
-            } else {
-
-            echo json_encode($arr);   
-            }
-
-    }
-
-
-    function edit_users()
-    {             
-            $name = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('name', TRUE));
-            $lastname = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('lastname', TRUE));
-
-             $provinsi = preg_replace('/[^0-9\-]/', '', $this->input->post('provinsi', TRUE));
-
- 			$id_user = $this->input->post('id_user');
-          
-            $slug = url_title($this->input->post('slug'),'dash',TRUE);
-            $password = $this->input->post('password');
-            $password2 = $this->input->post('password2');
-            $newsletter = $this->input->post('newsletter');
-            
-
-
-            $datains = array();
-            $newsins = array();
-            $perbarui_sandi = false;
-            $arr['result']  = 'confirm';
-            $arr['message'] = '<ul>';
-
-          
-            if (strlen($name) == 0) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('fillname').'</li>';
-            }
-
-            if (strlen($lastname) == 0) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('lastname').'</li>';
-            }
-
-            if (strlen($slug) == 0) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('slug').'</li>';
-            }
-
-
-
-
-        if(strlen($password)==0){
-            $perbarui_sandi = true;
-             if (($password) != ($password2)) {
-                $arr['result'] = 'error';
-                $arr['message'] .= '<li>'.$this->lang->line('passwordequal').'</li>';
-            }
-        }
-
-           
-
-         
-
-            if ($arr['result'] != 'error') 
-            {
-
-
-                if($perbarui_sandi){
-                    $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
-                    $passwordins = hash('sha256', $password . $salt); 
-                    for($round = 0; $round < 65536; $round++){ $passwordins = hash('sha256', $passwordins . $salt); }
-                         $datains['user_pass'] = $passwordins;
-                      $datains['user_salt'] = $salt;
-                }
-               
-                $datains['user_name'] = $name;
-                $datains['user_slug'] = $slug;
-                $datains['user_lastname'] = $lastname;
-               
-           
-               
-                $datains['provinsi'] = $provinsi;
-                $this->db->where('user_id', $id_user);
-                 $this->db->update('users', $datains);
-              
-                redirect("/dashboard/petugas");
-                
-
-            
-
-            } else {
-
-            echo json_encode($arr);   
-            }
-
-    }
-
 
 
     function updatedata()
@@ -859,46 +547,6 @@ private $user_id = "";
             echo json_encode($arr);   
     }
     
-
-	public function removeuser()
-	{		
-		if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;		
-		$i = $this->input->post('i');
-		$this->db->where(array("user_id"=>$i));
-		$this->db->delete("users");
-	}
-	function edituser($i) {
-		$sel['sel'] = "users";
-
-		$data['stories'] = $this->admin_model->get_specific_user($i);
-
-		$this->load->view('layout/header');
-        $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/useredit', $data);
-        $this->load->view('layout/footer');
-	}
-	public function usereditdata() {
-		
-			if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;	
-			
-			$user_id =  $_POST['user_id'];			
-			$user_name =  $_POST['user_name'];
-			$user_lastname =  $_POST['user_lastname'];
-			$user_email =  $_POST['user_email'];
-			$level =  $_POST['level'];
-            
-			$data = array(
-				'user_name' => $user_name,
-				'user_lastname' => $user_lastname,
-				'user_email' => $user_email,
-				'user_level' => $level
-			);
-
-			$this->db->where('user_id', $user_id);
-			$this->db->update('users', $data); 
-			
-			echo "edit";	 
-	}
 
 	public function add_sungai_data() 
 	{
@@ -2026,6 +1674,6 @@ public function remove_pengumuman($id)
                 echo json_encode($arr);  
 
     }
-
+	
 	
 }
