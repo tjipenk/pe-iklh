@@ -13,7 +13,7 @@
 	
 			<form id="usersform" action="" method="post">
 
-			<div class="col-lg-6 pull-right" style="padding:20px 20px;  text-align: right;"><input class="form-control"type="text" value="" name="pubpesquisar" placeholder="Search" /></div>
+			<div class="col-lg-6 pull-right" style="padding:20px 20px;  text-align: right;"><input class="form-control"type="hidden" value="" name="pubpesquisar" placeholder="Search" /></div>
 			
 			<div id="usersarea" class="panel-body">
 										
@@ -38,6 +38,14 @@ $("#usersform").on('submit',(function(e) {
                 },
                 function(data){
                     $("#usersarea").html(data);
+					$('#datatable').DataTable({
+						
+						dom: 'Bfrtip',
+						buttons: [
+							'csv','pdf'
+						]
+						
+					}); // ini yang buat datatables nya ya   <<<--------
 				});
         return false;		
 }));

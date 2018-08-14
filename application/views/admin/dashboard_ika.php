@@ -15,7 +15,7 @@
 	
 			<form id="usersform" action="" method="post">
 
-			<div class="col-lg-6 pull-right" style="padding:20px 20px;  text-align: right;"><input class="form-control"type="text" value="" name="pubpesquisar" placeholder="Search" /></div>
+			<div class="col-lg-6 pull-right" style="padding:20px 20px;  text-align: right;"><input class="form-control"type="hidden" value="" name="pubpesquisar" placeholder="Search" /></div>
 			
 			<div id="usersarea" class="panel-body">
 										
@@ -23,7 +23,7 @@
 										
 			</form>
 
-			<table class="table">
+			<table class="table datatable table-striped" id="datatable">
                                         <thead>
                                             <tr>
                                                 <th>Provinsi</th>
@@ -63,4 +63,18 @@
 
 	</div>			
 </div>
+
+<script type='text/javascript'>
+jQuery(document).ready(function($){
+        
+							$('#datatable').DataTable({
+								
+								dom: 'Bfrtip',
+								buttons: [
+									'csv','pdf'
+								]
+								
+							}); // ini yang buat datatables nya ya   <<<--------
+});
+</script>
 

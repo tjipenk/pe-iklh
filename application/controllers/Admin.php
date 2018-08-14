@@ -119,7 +119,8 @@ private $user_id = "";
 		
 		$data['sungai'] = $this->admin_model->get_lokasi_sungai('', $p, '', 'all');		
 		
-		$this->load->view('admin/ajaxcontent/loadSungai', $data);
+		// $this->load->view('admin/ajaxcontent/loadSungai', $data);
+		$this->load->view('admin/load_Sungai', $data);
 	}
 
 	function add_sungai() {
@@ -212,7 +213,8 @@ private $user_id = "";
 		
 		$data['sungai'] = $this->admin_model->get_data_sungai('', $p, '', 'all');		
 		
-		$this->load->view('admin/ajaxcontent/loadDataSungai', $data);
+		// $this->load->view('admin/ajaxcontent/loadDataSungai', $data);
+		$this->load->view('admin/load_dataSungai', $data);
 	}
 
 	public function parameter_sungai()
@@ -231,7 +233,8 @@ private $user_id = "";
 		
 		$data['sungai'] = $this->admin_model->get_parameter_sungai('', $p, '', 'all');		
 		
-		$this->load->view('admin/ajaxcontent/loadParSungai', $data);
+		// $this->load->view('admin/ajaxcontent/loadParSungai', $data);
+		$this->load->view('admin/load_ParSungai', $data);
 	}
 
 	function add_par_sungai() {
@@ -358,6 +361,9 @@ private $user_id = "";
            	$datains2['fcoli'] = $fcoli;
 			$datains2['tcoli'] = $tcoli;
 			$datains2['ket'] = $deskripsi;
+			$datains2['validated'] = 1;
+			$datains2['tanggal'] = $tanggal;
+			$datains2['date_input'] = date("Y-m-d H:i:s");
 			
 			$this->db->insert('tbl_sungai', $datains2); 
 
@@ -365,7 +371,7 @@ private $user_id = "";
 			
 			echo "add";	 
 	}
-
+	
 	function add_kelompok_tani() {
 		$sel['sel'] = "users";
 		$data['kecamatan'] 		= $this->dashboard_model->data_kecamatan();
@@ -2028,4 +2034,18 @@ public function remove_pengumuman($id)
     }
 
 	
+	function removedatasungai(){		
+		if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;		
+		$i = $this->input->post('i');
+		$this->db->where(array("id_sungai"=>$i));
+		$this->db->delete("tbl_sungai");
+	}
+	
+	function validatedatasungai(){		
+		if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;		
+		$i = $this->input->post('i');
+		$this->db->where(array("id_sungai"=>$i));
+		$this->db->update("tbl_sungai", array('validated' => 1));
+	}
+
 }
