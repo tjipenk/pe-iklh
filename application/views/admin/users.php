@@ -8,7 +8,7 @@
     <![endif]-->
  
     <div class="container" style="margin-top: 40px">
-        <h1 style="font-size:20pt">Petugas</h1>
+        <h1 style="font-size:20pt">Daftar User dan Administrator</h1>
         <a class="btn pull-right" style="background: #2B3643;color: #fff;margin:-20px 0 30px 0" href="<?php echo base_url();?>admin/register"> Tambah petugas</a>
         <br />
         <table class="table datatable table-striped" id="datatable">

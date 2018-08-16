@@ -59,7 +59,7 @@ private $user_id = "";
 		
 		$this->load->view('admin/ajaxcontent/loadUsers', $data);
 	}
-
+/*
 	public function user_list_ajax()
     {
         $list = $this->customers->get_datatables();
@@ -101,7 +101,7 @@ private $user_id = "";
         $this->load->view('admin/useradd');
         $this->load->view('layout/footer');
 	}
-
+*/
 	public function daftar_sungai()
 	{
 		$sel['sel'] = "daftar_sungai";
@@ -408,14 +408,16 @@ private $user_id = "";
 	
 
 	function edit_user($id){
-		$data['provinsi']    = $this->admin_model->data_provinsi();
-		$petugas = $this->dashboard_model->data_petugas($id);
+		$sel['sel'] = "users";
+		$data['provinsi'] = $this->admin_model->data_provinsi();
+		$petugas = $this->admin_model->data_petugas($id);
 		
- 		$data['petugas']= $petugas[0];
+ 		$data['petugas'] = $petugas[0];
 		$this->load->helper('url');
-		$this->load->view('layout', $data);
-	    $this->load->view('edit_user', $data);
-	    $this->load->view('layout');	
+		$this->load->view('layout/header');
+        $this->load->view('layout/navigation', $sel);
+	    $this->load->view('admin/edit_user', $data);
+	    $this->load->view('layout/footer');	
 	}
 
 	public function user_list()
@@ -490,7 +492,9 @@ private $user_id = "";
             $slug = url_title($this->input->post('slug'),'dash',TRUE);
             $password = $this->input->post('password');
             $password2 = $this->input->post('password2');
-            $newsletter = $this->input->post('newsletter');
+			$newsletter = $this->input->post('newsletter');
+			$provinsi = $this->input->post('provinsi');
+			$level = $this->input->post('level');		
             $terms = $this->input->post('terms');
 
             $this->load->helper('captcha');
@@ -542,12 +546,12 @@ private $user_id = "";
                 $arr['result'] = 'error';
                 $arr['message'] .= '<li>'.$this->lang->line('slugexists').'</li>';
             }
-
+			/*
             if ($this->user_model->email_exists($email)) {
                 $arr['result'] = 'error';
                 $arr['message'] .= '<li>'.$this->lang->line('emailexists').'</li>';
             }
-            
+            */
 
             if ($arr['result'] != 'error') 
             {
@@ -561,13 +565,13 @@ private $user_id = "";
                 $datains['user_lastname'] = $lastname;
                 //$datains['user_email'] = $email;
                 $datains['user_pass'] = $passwordins;
-                 $datains['user_level'] = 2;
+                 $datains['user_level'] = $level;
 				$datains['user_salt'] = $salt;
                 $datains['provinsi'] = $provinsi;
                 $datains['user_date'] = date('Y-m-d G:i:s');
                 $result = $this->user_model->insert_user($datains);
 
-                redirect("/dashboard/petugas");
+                redirect("/admin/users");
                 
 
             
@@ -580,7 +584,7 @@ private $user_id = "";
     }
 
 
-    function edit_users()
+    function edit_userdata()
     {             
             $name = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('name', TRUE));
             $lastname = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('lastname', TRUE));
@@ -592,8 +596,10 @@ private $user_id = "";
             $slug = url_title($this->input->post('slug'),'dash',TRUE);
             $password = $this->input->post('password');
             $password2 = $this->input->post('password2');
-            $newsletter = $this->input->post('newsletter');
-            
+			$newsletter = $this->input->post('newsletter');
+			$provinsi = $this->input->post('provinsi');
+			$level = $this->input->post('level');
+			
 
 
             $datains = array();
@@ -647,15 +653,13 @@ private $user_id = "";
                
                 $datains['user_name'] = $name;
                 $datains['user_slug'] = $slug;
-                $datains['user_lastname'] = $lastname;
-               
-           
-               
-                $datains['provinsi'] = $provinsi;
+				$datains['user_lastname'] = $lastname;
+				$datains['provinsi'] = $provinsi;
+				$datains['user_level'] = $level;
                 $this->db->where('user_id', $id_user);
                  $this->db->update('users', $datains);
               
-                redirect("/dashboard/petugas");
+                redirect("/admin/users");
                 
 
             
