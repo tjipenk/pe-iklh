@@ -27,12 +27,28 @@ private $user_id = "";
 
 	}
 	
+	public function dashboard()
+    {
+		$sel['sel'] = "dashboard";
+		//$p = $this->input->post('p');
+		
+		$data['sungai'] = $this->admin_model->get_ika();		
+		
+		//print_r($data);
+  		$this->load->view('layout/header');
+        $this->load->view('layout/navigation_prov', $sel);
+        $this->load->view('admin_prov/dashboard_ika', $data);
+		
+        $this->load->view('layout/footer');
+    }
+	
 	public function daftar_sungai(){
 		$sel['sel'] = "daftar_sungai";
+		$data['data_ika'] = $this->admin_model->get_ika();
 	
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation_prov', $sel);
-        $this->load->view('admin_prov/daftar_sungai');
+        $this->load->view('admin_prov/daftar_sungai', $data);
         $this->load->view('layout/footer');
 	}
 

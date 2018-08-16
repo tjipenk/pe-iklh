@@ -88,7 +88,7 @@ class Login extends CI_Controller {
                         redirect('/admin_prov/');
 
                         case 4:
-                        redirect('/admin/');
+                        redirect('/lap_prov/');
                         
                         default: 
                         redirect('/');

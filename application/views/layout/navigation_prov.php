@@ -17,7 +17,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="<?php echo base_url(); ?>admin/dashboard">Akuisisi Data IKLH</a>
+      <a class="navbar-brand" href="<?php echo base_url(); ?>admin_prov/dashboard">Akuisisi Data IKLH</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
@@ -62,7 +62,7 @@
                         <?php if (count($reports)>0): ?>
                         <?php foreach($reports as $rep): ?>
                         <li>
-                        <a href="<?php echo base_url(); ?>admin/editstory/<?php echo $rep['posts_id']; ?>"><span class="label label-warning">Report content</span><br /><span title="<?php echo $rep['desc']; ?>"><?php echo substr($rep['desc'], 0, 50)."..."; ?></span><br />
+                        <a href="<?php echo base_url(); ?>admin_prov/editstory/<?php echo $rep['posts_id']; ?>"><span class="label label-warning">Report content</span><br /><span title="<?php echo $rep['desc']; ?>"><?php echo substr($rep['desc'], 0, 50)."..."; ?></span><br />
                         <small><span style="opacity:0.7;">on post</span> <?php echo mb_substr($rep['post_subject'],0,25)."..."; ?> <span style="opacity:0.7;">by</span> <?php echo $rep['user_name']." ".$rep['user_lastname']; ?>.</small></a>
                         </li>
                         <?php endforeach; ?>
