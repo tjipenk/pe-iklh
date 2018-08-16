@@ -66,7 +66,7 @@ class Customer_model extends CI_Model {
  
     function count_filtered()
     {
-         $this->db->where("user_level",2);
+        // $this->db->where("user_level",2);
         $this->_get_datatables_query();
 
         $query = $this->db->get();
@@ -75,7 +75,7 @@ class Customer_model extends CI_Model {
  
     public function count_all()
     {
-         $this->db->where("user_level",2);
+        // $this->db->where("user_level",2);
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }

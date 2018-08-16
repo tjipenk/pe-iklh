@@ -43,10 +43,11 @@ private $user_id = "";
 	public function users()
 	{
 		$sel['sel'] = "users";
+		$data['petugas'] = $this->admin_model->get_daftar_users();
 
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/users');
+        $this->load->view('admin/users', $data);
         $this->load->view('layout/footer');
 	}
 

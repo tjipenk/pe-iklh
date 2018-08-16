@@ -10,25 +10,57 @@
     <div class="container" style="margin-top: 40px">
         <h1 style="font-size:20pt">Petugas</h1>
         <a class="btn pull-right" style="background: #2B3643;color: #fff;margin:-20px 0 30px 0" href="<?php echo base_url();?>admin/register"> Tambah petugas</a>
- 
-       
         <br />
-        
-        <table id="table" class="display" cellspacing="0" width="100%">
+        <table class="table datatable table-striped" id="datatable">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nama depan</th>
-                    <th>Nama beakang</th>
+                    <th>Nama</th>
                     <th>Username</th>
                    <th>Provinsi</th>
+                   <th>Level</th>
                       <?php if($this->session->userdata('logged_in')) { ?>
 <th>Action</th>
                      <?php } ?>
                 </tr>
             </thead>
             <tbody>
-            </tbody>
+                                            
+                                                        <?php if (count($petugas)>0): ?>
+
+                                                       
+
+                                                        <?php
+                                                        $no = 1;
+                                                        foreach($petugas as $pub): ?>
+														
+
+                                                        <tr data-id="<?php echo $pub['user_id']; ?>">
+                                                        
+                                                            <td><?php echo  $no; $no++;?></td>
+                                                            <td><?php echo $pub['user_name']." ".$pub['user_lastname'];;?></td>
+                                                            <td><?php echo $pub['user_slug'];?></td>
+                                                            <td><?php $prov = $this->admin_model->get_nama_wilayah($pub['provinsi']);
+                                                                    echo $prov[0]['nama'];?></td>
+                                                            <td><?php echo $pub['user_level'];?></td>
+                                                        <?php    if($this->session->userdata('logged_in')) {
+                                                            echo "<td> <a class='btn' style='background: #2B3643;color: #fff' href='".base_url()."admin/edit_user/".$pub['user_id']."'>Edit</a> </td>"; 
+                                                        } ?>
+
+     																									
+                                                        </tr>                                                        
+                                                        
+                                                        <?php endforeach; ?>
+                                                        
+
+                                                    <?php else: ?>
+
+                                                    No Data Sungai.
+
+                                                    <?php endif; ?>
+
+
+                                        </tbody>
  
            
         </table>
@@ -36,124 +68,19 @@
  
 <script src="<?php echo base_url('assets/jquery/jquery-2.2.3.min.js')?>"></script>
 <script src="<?php echo base_url('assets/datatables/js/jquery.dataTables.min.js')?>"></script>
- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
- 
-<script type="text/javascript">
- function editPanen(id,luas) {
-   $("#user_name").val(luas);
-   alert(luas);
-   $("#id_tanam").val(id);
-  }
-  
-var table;
- 
-$(document).ready(function() {
- 
-    //datatables
-    table = $('#table').DataTable({ 
- 
-        "processing": true, //Feature control the processing indicator.
-        "serverSide": true, //Feature control DataTables' server-side processing mode.
-        "order": [], //Initial no order.
- 
-        // Load data for the table's content from an Ajax source
-        "ajax": {
-            "url": "<?php echo site_url('admin/user_list_ajax')?>",
-            "type": "POST"
-        },
- 
-        //Set column definition initialisation properties.
-        "columnDefs": [
-        { 
-            "targets": [ 0 ], //first column / numbering column
-            "orderable": false, //set not orderable
-        },
-        ],
- 
-    });
- 
-});
-
-
-
-$("#submit").click(function(){
-    var luas_tanam = $("#luas_tanam").val();
-    var id_tanam =   $("#id_tanam").val();
-
-    $.ajax({
-      method: "POST",
-      url: '<?php echo base_url();?>admin/edituser',
-      data: { 'id':id_tanam,'berat_tanam':luas_tanam }
-    })
-  .done(function( msg ) {
-    //alert( "Data Saved: " + msg );
-     $('.close').click(); 
-     swal("Sukses mengubah!", "Data telah berhasil di ubah!", "success")
-        table.ajax.reload();
-  });
- 
+<?php /* <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+ */ ?>
+<script type='text/javascript'>
+jQuery(document).ready(function($){
+        
+							$('#datatable').DataTable({
+								
+								dom: 'Bfrtip',
+								buttons: [
+									'csv','pdf'
+								]
+								
+							}); // ini yang buat datatables nya ya   <<<--------
 });
 </script>
- 
-
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Edit</h4>
-      </div>
-      <div class="modal-body">
-      <form>
-
-  <input type="hidden" name="id" id="id_tanam">
-  <div class="row" style="margin-top:10px;">
-                                <div class="col-sm-6">
-                                    <div class="append-icon">
-                                        <input type="text" name="name" id="user_name"class="form-control form-white" placeholder="Nama depan" required="" autofocus="">
-                                        <i class="icon-user"></i>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="append-icon">
-                                        <input type="text" name="lastname" class="form-control form-white lastname" placeholder="Nama belakang" >
-                                        <i class="icon-user"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="append-icon" style="margin-top:10px;">
-                                <input type="slug" name="slug" id="slug" class="form-control form-white email" placeholder="<?php echo $this->lang->line('input_slug'); ?>" required="">                           
-                            </div>
-                            
-
-                         
-
-
-                            <div class="append-icon" style="margin-top:10px;">
-                                <input type="password" name="password" class="form-control form-white password" placeholder="<?php echo $this->lang->line('input_password'); ?>" required="">
-                                <i class="icon-lock"></i>
-                            </div>
-                            <div class="append-icon" style="margin-top:10px;">
-                                <input type="password" name="password2" class="form-control form-white password2" placeholder="Konfirmasi password" required="">
-                                <i class="icon-lock"></i>
-                            </div>
-                            
-
-                           
- 
- 
-</form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-        <button type="button" id="submit" class="btn btn-primary">Edit</button>
-      </div>
-    </div>
-  </div>
-</div>
 

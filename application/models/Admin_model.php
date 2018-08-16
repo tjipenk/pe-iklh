@@ -29,6 +29,13 @@ class Admin_model extends CI_Model
 
 	}
 
+	public function get_daftar_users() 
+	{
+		$query = $this->db->get('users');	
+		return $query->result_array();
+
+	}
+
 	
 
 	public function get_lokasi_sungai($offset = null, $search = "", $filter = "Popular", $all = "") 
