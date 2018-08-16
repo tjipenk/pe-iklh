@@ -29,7 +29,7 @@
 
                             <div class="append-icon" style="margin-top:10px;">
                                 <p>Provinsi tempat bertugas
-                                <select name="Provinsi"  class="form-control form-white password">
+                                <select name="provinsi"  class="form-control">
                                    <?php
 
                                    foreach ($provinsi as $key => $value) {
@@ -43,6 +43,17 @@
                                 </select>
                              
                             </div>
+
+                            <div class="append-icon" style="margin-top:10px;">
+                                <p>Level Petugas
+                                <select name="level"  class="form-control">
+                                        <option value="4">Petugas Input</option>
+                                        <option value="3">Administrator</option>
+                                    
+                                </select>
+                             
+                            </div>
+
                             <hr/>
 
 

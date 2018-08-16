@@ -54,18 +54,18 @@
                                         <i class="icon-user"></i>
                                     </div>
                                 </div>
-                            </div>
+                            </div> <?php /*
                             <div class="append-icon" style="margin-top:10px;">
                                 <textarea class="form-control" maxlength="160" name="shortbio" placeholder="<?php echo $this->lang->line('input_shortbio'); ?>" style="width:100%;"><?php echo $use['shortbio']; ?></textarea>
                                 <i class="icon-envelope"></i>
-                            </div>
+                            </div> */ ?>
                             <div class="append-icon" style="margin-top:10px;">
                                 <input type="slug" name="slug" id="slug" class="form-control form-white" placeholder="<?php echo $this->lang->line('input_slug'); ?>" value="<?php echo $use['user_slug']; ?>" required="">                           
-                            </div>
+                            </div> <?php /*
                             <div class="append-icon" style="margin-top:10px;">
                                 <input type="email" name="email" id="email" class="form-control form-white email" placeholder="<?php echo $this->lang->line('input_email'); ?>" value="<?php echo $use['user_email']; ?>" required="" <?php if ($this->session->userdata('User')) {?>disabled<?php } ?>>
                                 <i class="icon-envelope"></i>
-                            </div>
+                            </div> */ ?>
                             <div class="append-icon" style="margin-top:10px;">
                                 <input type="password" name="password" class="form-control form-white password" placeholder="<?php echo $this->lang->line('input_password'); ?>">
                                 <i class="icon-lock"></i>
@@ -73,7 +73,7 @@
                             <div class="append-icon" style="margin-top:10px;">
                                 <input type="password" name="password2" class="form-control form-white password2" placeholder="<?php echo $this->lang->line('input_confirmpassword'); ?>">
                                 <i class="icon-lock"></i>
-                            </div>
+                            </div> <?php /*
                             <div class="terms option-group" style="margin-top:30px;">
                                 <label for="terms" class="m-t-10">
                                 <input type="checkbox" name="newsletter">
@@ -104,7 +104,7 @@
                             <div class="append-icon" style="margin-top:10px;">
                                 <input type="text" name="pinterest" id="pinterest" class="form-control form-white email" placeholder="<?php echo $this->lang->line('input_pinterest'); ?>" value="<?php echo $use['user_pinterest']; ?>">
                                 <i class="icon-envelope"></i>
-                            </div>
+                            </div> */ ?>
                             
                             
                             <div class="clearfix">

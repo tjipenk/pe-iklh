@@ -34,12 +34,17 @@ if($this->session->userdata('logged_in')) {
 		{
 			redirect('stories');
 		}
-		$data['user'] = $this->user_model->get_profile_edit();        
-
-        $this->load->view('header3');
-        $this->load->view('navigation');
+        $data['user'] = $this->user_model->get_profile_edit();
+        $sel['sel'] = "users";
+        $this->load->view('layout/header');
+        $this->load->view('layout/navigation', $sel);
         $this->load->view('pages/profile-edit', $data);
-     $this->load->view('footer4');
+        $this->load->view('layout/footer');
+
+    //    $this->load->view('header');
+    //   $this->load->view('navigation');
+    //    $this->load->view('pages/profile-edit', $data);
+    //   $this->load->view('footer4');
     }
     public function viewprofile($i)
     {
