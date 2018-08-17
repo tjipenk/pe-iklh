@@ -2038,7 +2038,13 @@ public function remove_pengumuman($id)
 
     }
 
-	
+	function removeparsungai(){		
+		if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;		
+		$i = $this->input->post('i');
+		$this->db->where(array("id"=>$i));
+		$this->db->delete("par_ika");
+	}
+
 	function removedatasungai(){		
 		if ($_SERVER['SERVER_NAME'] == "labs.psilva.pt") return false;		
 		$i = $this->input->post('i');
