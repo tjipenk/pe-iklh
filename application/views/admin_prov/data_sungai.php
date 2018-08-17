@@ -1,3 +1,11 @@
+<div class="container header" style="margin-bottom:2em;margin-top:2em">
+	<div class="row" style="padding:10px">
+		<div align="center" style="border-radius: 10px; border: 1px solid; background-color: #99cc99; padding:10px;">
+			<th align="center"><h3>IKA PROVINSI <?=$data_ika[0]['provinsi']?> TERKINI : <?=$data_ika[0]['ika']?></h3></th>
+		</div>
+	</div>
+</div>
+
 <div class="container header">
 <div class="pull-left row">
 <h1 class="page_title_text">Data Pemantauan Sungai</h1>

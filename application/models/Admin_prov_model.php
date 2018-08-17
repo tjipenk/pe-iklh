@@ -29,6 +29,24 @@ class Admin_prov_model extends CI_Model
 
 	}
 
+	public function get_daftar_users() 
+	{	
+		$id_prov = $this->session->userdata("provinsi");
+		$this->db->where('provinsi',$id_prov);
+		$query = $this->db->get('users');
+
+		return $query->result_array();
+
+	}
+	function data_petugas($id) {
+		$this->db->select('*');
+		$this->db->from('users');
+	
+		$this->db->where("user_id='$id'");
+		$query = $this->db->get();
+	    return $query->result_array(); 
+	}
+
 	
 
 	public function get_lokasi_sungai($offset = null, $search = "", $filter = "Popular", $all = "") 
@@ -418,6 +436,7 @@ class Admin_prov_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('tbl_sungai');
 		$this->db->where('id_prov',$i);
+		$this->db->where('validated',1);
 		//$this->db->limit(1);
 		$query = $this->db->get();
 		 return $query->result_array();
