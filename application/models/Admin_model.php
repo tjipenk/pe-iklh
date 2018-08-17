@@ -255,7 +255,7 @@ class Admin_model extends CI_Model
 
 	public function data_provinsi()
 	{
-		$query = $this->db->query("SELECT kode as id_prov, nama as prov FROM `wilayah` WHERE LENGTH(kode)<=2");
+		$query = $this->db->query("SELECT kode as id_prov, nama as prov FROM `wilayah` WHERE LENGTH(kode)=2");
 	    return $query->result_array(); 
 	}
 
