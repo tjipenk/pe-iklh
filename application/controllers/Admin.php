@@ -20,8 +20,8 @@ private $user_id = "";
     /* dashboard */
 	public function index() 
 	{
-	//	redirect('/admin/dashboard', 'location');
-		redirect('/admin/daftar_sungai', 'location');
+		redirect('/admin/dashboard', 'location');
+	//	redirect('/admin/daftar_sungai', 'location');
 
 	}
 	public function dashboard()
