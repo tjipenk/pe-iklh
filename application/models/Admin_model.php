@@ -420,6 +420,7 @@ class Admin_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('tbl_sungai');
 		$this->db->where('id_prov',$i);
+		$this->db->where('validated',1);
 		//$this->db->limit(1);
 		$query = $this->db->get();
 		 return $query->result_array();

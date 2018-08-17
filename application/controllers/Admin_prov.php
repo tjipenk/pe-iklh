@@ -9,6 +9,7 @@ private $user_id = "";
 		$this->load->model('stories_model');
 		$this->load->model('dashboard_model');
 		$this->load->model('customer_model','customers');
+		$this->load->model('user_model');
 		
 		// $this->admin_model->check_admin();
 			// print_r($this->db->last_query());
@@ -40,6 +41,249 @@ private $user_id = "";
         $this->load->view('admin_prov/dashboard_ika', $data);
 		
         $this->load->view('layout/footer');
+	}
+
+	public function users()
+	{
+		$sel['sel'] = "users";
+		$data['petugas'] = $this->admin_model->get_daftar_users();
+
+		$this->load->view('layout/header');
+        $this->load->view('layout/navigation_prov', $sel);
+        $this->load->view('admin_prov/users', $data);
+        $this->load->view('layout/footer');
+	}
+
+
+	public function register()
+	{
+		$data['provinsi']    = $this->admin_model->data_provinsi();
+		
+		$sel['sel'] = "users";
+	
+        $this->load->helper('captcha');
+        $random_number = substr(number_format(time() * rand(),0,'',''),0,6);
+          $vals = array(
+                 'word' => $random_number,
+                 'img_path' => './captcha/',
+                 'img_url' => base_url().'captcha/',
+                 'img_width' => 140,
+                 'img_height' => 32,
+                 'expiration' => 7200
+                );
+        $data['captcha'] = create_captcha($vals);
+        $this->session->set_userdata('captchaWord',$data['captcha']['word']);
+
+        $this->load->view('layout/header');
+		$this->load->view('layout/navigation_prov', $sel);
+		$this->load->view('admin_prov/register', $data);
+		$this->load->view('layout/footer');
+	}
+
+	function registerdata()
+    {             
+
+
+            $name = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('name', TRUE));
+            $lastname = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('lastname', TRUE));
+
+             $provinsi = preg_replace('/[^0-9\-]/', '', $this->input->post('provinsi', TRUE));
+
+
+          
+            $slug = url_title($this->input->post('slug'),'dash',TRUE);
+            $password = $this->input->post('password');
+            $password2 = $this->input->post('password2');
+			$newsletter = $this->input->post('newsletter');
+			$provinsi = $this->input->post('provinsi');
+			$level = $this->input->post('level');		
+            $terms = $this->input->post('terms');
+
+            $this->load->helper('captcha');
+            $userCaptcha = $this->input->post('userCaptcha');
+
+            $arr['result'] = 'confirm';
+            $arr['message'] = '<ul>';
+
+            $datains = array();
+            $newsins = array();
+
+            $arr['result'] = 'confirm';
+            $arr['message'] = '<ul>';
+
+          
+            if (strlen($name) == 0) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('fillname').'</li>';
+            }
+
+            if (strlen($lastname) == 0) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('lastname').'</li>';
+            }
+
+            if (strlen($slug) == 0) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('slug').'</li>';
+            }
+
+        
+
+            if (strlen($password) == 0) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('fillpassword').'</li>';
+            }
+
+            if (strlen($password2) == 0) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('fillcpassword').'</li>';
+            }
+
+            if (($password) != ($password2)) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('passwordequal').'</li>';
+            }
+
+            if ($this->user_model->slug_exists($slug)) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('slugexists').'</li>';
+            }
+			/*
+            if ($this->user_model->email_exists($email)) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('emailexists').'</li>';
+            }
+            */
+
+            if ($arr['result'] != 'error') 
+            {
+
+				$salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
+				$passwordins = hash('sha256', $password . $salt); 
+				for($round = 0; $round < 65536; $round++){ $passwordins = hash('sha256', $passwordins . $salt); }
+		
+                $datains['user_name'] = $name;
+                $datains['user_slug'] = $slug;
+                $datains['user_lastname'] = $lastname;
+                //$datains['user_email'] = $email;
+                $datains['user_pass'] = $passwordins;
+                 $datains['user_level'] = $level;
+				$datains['user_salt'] = $salt;
+                $datains['provinsi'] = $provinsi;
+                $datains['user_date'] = date('Y-m-d G:i:s');
+                $result = $this->user_model->insert_user($datains);
+
+                redirect("/admin_prov/users");
+                
+
+            
+
+            } else {
+
+            echo json_encode($arr);   
+            }
+
+	}
+
+	function edit_user($id){
+		$sel['sel'] = "users";
+		$data['provinsi'] = $this->admin_model->data_provinsi();
+		$petugas = $this->admin_model->data_petugas($id);
+		
+ 		$data['petugas'] = $petugas[0];
+		$this->load->helper('url');
+		$this->load->view('layout/header');
+        $this->load->view('layout/navigation_prov', $sel);
+	    $this->load->view('admin_prov/edit_user', $data);
+	    $this->load->view('layout/footer');	
+	}
+
+
+    function edit_userdata()
+    {             
+            $name = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('name', TRUE));
+            $lastname = preg_replace('/[^A-Za-z0-9\-]/', '', $this->input->post('lastname', TRUE));
+
+             $provinsi = preg_replace('/[^0-9\-]/', '', $this->input->post('provinsi', TRUE));
+
+ 			$id_user = $this->input->post('id_user');
+          
+            $slug = url_title($this->input->post('slug'),'dash',TRUE);
+            $password = $this->input->post('password');
+            $password2 = $this->input->post('password2');
+			$newsletter = $this->input->post('newsletter');
+			$provinsi = $this->input->post('provinsi');
+			$level = $this->input->post('level');
+			
+
+
+            $datains = array();
+            $newsins = array();
+            $perbarui_sandi = false;
+            $arr['result']  = 'confirm';
+            $arr['message'] = '<ul>';
+
+          
+            if (strlen($name) == 0) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('fillname').'</li>';
+            }
+
+            if (strlen($lastname) == 0) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('lastname').'</li>';
+            }
+
+            if (strlen($slug) == 0) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('slug').'</li>';
+            }
+
+
+
+
+        if(strlen($password)==0){
+            $perbarui_sandi = true;
+             if (($password) != ($password2)) {
+                $arr['result'] = 'error';
+                $arr['message'] .= '<li>'.$this->lang->line('passwordequal').'</li>';
+            }
+        }
+
+           
+
+         
+
+            if ($arr['result'] != 'error') 
+            {
+
+
+                if($perbarui_sandi){
+                    $salt = dechex(mt_rand(0, 2147483647)) . dechex(mt_rand(0, 2147483647));
+                    $passwordins = hash('sha256', $password . $salt); 
+                    for($round = 0; $round < 65536; $round++){ $passwordins = hash('sha256', $passwordins . $salt); }
+                         $datains['user_pass'] = $passwordins;
+                      $datains['user_salt'] = $salt;
+                }
+               
+                $datains['user_name'] = $name;
+                $datains['user_slug'] = $slug;
+				$datains['user_lastname'] = $lastname;
+				$datains['provinsi'] = $provinsi;
+				$datains['user_level'] = $level;
+                $this->db->where('user_id', $id_user);
+                 $this->db->update('users', $datains);
+              
+                redirect("/admin_prov/users");
+                
+
+            
+
+            } else {
+
+            echo json_encode($arr);   
+            }
+
     }
 	
 	public function daftar_sungai(){
@@ -186,10 +430,11 @@ private $user_id = "";
 
 	public function data_sungai(){
 		$sel['sel'] = "data_sungai";
+		$data['data_ika'] = $this->admin_model->get_ika();
 	
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation_prov', $sel);
-        $this->load->view('admin_prov/data_sungai');
+        $this->load->view('admin_prov/data_sungai',$data);
         $this->load->view('layout/footer');
 	}
 

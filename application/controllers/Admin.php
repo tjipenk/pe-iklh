@@ -215,7 +215,7 @@ private $user_id = "";
 		$data['sungai'] = $this->admin_model->get_data_sungai('', $p, '', 'all');		
 		
 		// $this->load->view('admin/ajaxcontent/loadDataSungai', $data);
-		$this->load->view('admin/load_dataSungai', $data);
+		$this->load->view('admin/load_DataSungai', $data);
 	}
 
 	public function parameter_sungai()
