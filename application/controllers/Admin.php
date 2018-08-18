@@ -11,7 +11,7 @@ private $user_id = "";
 		$this->load->model('dashboard_model');
 		$this->load->model('customer_model','customers');
 		$this->load->model('user_model');
-		
+		set_time_limit();
 
 		$this->user_id = $this->session->userdata('userid');
 		if (!$this->admin_model->check_admin()) redirect('/', 'location'); //die("admin only");
