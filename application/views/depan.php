@@ -16,7 +16,7 @@
       <img src="images/pe-iklh4.jpg" alt="...">
       <div class="carousel-caption" style="top:120px!important" >
         <h1 class="rs_text_color_1">PE-IKLH</h1>
-		<span class="rs_text_style_1" style="margin:20px 0">Perhitungan Elektronik Indek Kualitas Lingkungan Hidup </span><br/>
+		<span class="rs_text_style_1" style="margin:20px 0">Perhitungan Elektronik Indeks Kualitas Lingkungan Hidup </span><br/>
 		<a href="#main"class="sc_button  sc_button_skin_dark sc_button_style_bg sc_button_size_medium" 
 		style="margin-top:30px;color:#fff;font-size:20px!important;padding:6px 20px">Pelajari</a>
 
@@ -45,7 +45,7 @@
       <img src="images/iklh2.jpg" style="height: 220px"alt="...">
       <div class="carousel-caption" style="top:20px!important" >
         <h1 class="rs_text_color_1" style="font-size: 40px!important">IKLH</h1>
-    <span class="rs_text_style_1" style="margin:20px 0;font-size: 18px!important">Indek Kualitas Lingkungan Hidup  </span><br/>
+    <span class="rs_text_style_1" style="margin:20px 0;font-size: 18px!important">Indeks Kualitas Lingkungan Hidup  </span><br/>
     <a href="#main"class="sc_button  sc_button_skin_dark sc_button_style_bg sc_button_size_medium" 
     style="margin-top:30px;color:#fff;font-size:18px!important;padding:6px 20px">Pelajari</a>
 
@@ -75,7 +75,7 @@
 <h3 class="sc_title sc_title_center sc_title_style_1 margin_bottom_50">
 Selamat datang </h3>
 <p style="text-align:center;font-size:18px;margin:-10px 0 20px">Dashboard Sistem Akuisis Data kulitas lingkungan hidup merupakan sistem berbentuk aplikasi berbasis web yang dapat membantu 
-Kementerian Lingkungan Hidup dan Kehutanan (KLHK) dalam pengelolaan segala informasi mengenai Indek Kualitas Lingkungan Hidup (IKLH).</p>
+Kementerian Lingkungan Hidup dan Kehutanan (KLHK) dalam pengelolaan segala informasi mengenai Indeks Kualitas Lingkungan Hidup (IKLH).</p>
 
 
 <div class=" sc_columns  sc_columns_3 sc_columns_indent">
@@ -90,7 +90,7 @@ Kementerian Lingkungan Hidup dan Kehutanan (KLHK) dalam pengelolaan segala infor
 </div>
 
 <center>
-<a href="./dashboard/tanam" class="sc_button  sc_button_skin_dark sc_button_style_bg sc_button_size_medium">Lihat </a>
+<a href="./ika/" class="sc_button  sc_button_skin_dark sc_button_style_bg sc_button_size_medium">Lihat </a>
 </center>
 
 </div>
@@ -108,7 +108,7 @@ Kementerian Lingkungan Hidup dan Kehutanan (KLHK) dalam pengelolaan segala infor
 </div>
 
 <center>
-<a href="./dashboard/tanam" class="sc_button  sc_button_skin_dark sc_button_style_bg sc_button_size_medium">Lihat </a>
+<a href="./iku/" class="sc_button  sc_button_skin_dark sc_button_style_bg sc_button_size_medium">Lihat </a>
 </center>
 
 </div>
