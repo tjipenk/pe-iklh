@@ -37,7 +37,7 @@ $("#usersform").on('submit',(function(e) {
                 function(data){
                     $("#usersarea").html(data);
 					$('#datatable').DataTable({
-						
+						stateSave: true,
 						dom: 'Bfrtip',
 						buttons: [
 							'csv','pdf'
