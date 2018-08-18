@@ -1,6 +1,6 @@
 <div class="container header">
 <div class="pull-left row">
-<h1 class="page_title_text">Data Pemantauan Sungai</h1>
+<h1 class="page_title_text">Dashboard Perhitungan Indeks Kualitas Air</h1>
 </div>
 <?php /*
 <a href="<?php echo site_url('admin/add_data_sungai'); ?>" style="float:right;">
