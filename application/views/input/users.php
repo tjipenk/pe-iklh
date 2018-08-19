@@ -1,49 +1,86 @@
-<div class="container header">
-<div class="pull-left row">
-<h1 class="page_title_text">Administrator</h1>
-</div>
-<a href="<?php echo site_url('admin/adduser'); ?>" style="float:right;">
-	<br />
-    <button type="button" class="btn btn-primary hidden-sd hidden-xs " style="margin-bottom:5px;">Tambah baru</button>
-</a>
-</div>
-    
-<div id="maincontent" class="container">
-	<div class="row content">
-	
-			<form id="usersform" action="" method="post">
 
-			<div class="col-lg-6 pull-right" style="padding:20px 20px;  text-align: right;"><input class="form-control"type="text" value="" name="pubpesquisar" placeholder="Search" /></div>
-			
-			<div id="usersarea" class="panel-body">
-										
-			</div>
-										
-			</form>
-	</div>			
-</div>
+    <link href="<?php echo base_url('assets/datatables/css/jquery.dataTables.min.css')?>" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+ 
+    <div class="container" style="margin-top: 40px">
+        <h1 style="font-size:20pt">Daftar User dan Administrator</h1>
+        <a class="btn pull-right" style="background: #2B3643;color: #fff;margin:-20px 0 30px 0" href="<?php echo base_url();?>admin_prov/register"> Tambah petugas</a>
+        <br />
+        <table class="table datatable table-striped" id="datatable">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Username</th>
+                   <th>Provinsi</th>
+                   <th>Level</th>
+                      <?php if($this->session->userdata('logged_in')) { ?>
+<th>Action</th>
+                     <?php } ?>
+                </tr>
+            </thead>
+            <tbody>
+                                            
+                                                        <?php if (count($petugas)>0): ?>
 
-<div class="pull-right hidden-xl hidden-lg" style="margin-top: 20px">
-				<a href="<?php echo site_url('admin/adduser'); ?>" id="tambah"style="background: #80b500;color: #fff;padding: 15px 20px 15px 0px;margin:20px 0 0 0;border-radius:30px;position:fixed;bottom:20px;right:30px"><i class="glyph-icon flaticon-add"></i></a>
-				</div>
+                                                       
+
+                                                        <?php
+                                                        $no = 1;
+                                                        foreach($petugas as $pub): ?>
+														
+
+                                                        <tr data-id="<?php echo $pub['user_id']; ?>">
+                                                        
+                                                            <td><?php echo  $no; $no++;?></td>
+                                                            <td><?php echo $pub['user_name']." ".$pub['user_lastname'];;?></td>
+                                                            <td><?php echo $pub['user_slug'];?></td>
+                                                            <td><?php $prov = $this->admin_model->get_nama_wilayah($pub['provinsi']);
+                                                                    echo $prov[0]['nama'];?></td>
+                                                            <td><?php echo $pub['user_level'];?></td>
+                                                        <?php    if($this->session->userdata('logged_in')) {
+                                                            echo "<td> <a class='btn' style='background: #2B3643;color: #fff' href='".base_url()."admin_prov/edit_user/".$pub['user_id']."'>Edit</a> </td>"; 
+                                                        } ?>
+
+     																									
+                                                        </tr>                                                        
+                                                        
+                                                        <?php endforeach; ?>
+                                                        
+
+                                                    <?php else: ?>
+
+                                                    No Data Sungai.
+
+                                                    <?php endif; ?>
 
 
+                                        </tbody>
+ 
+           
+        </table>
+    </div>
+ 
+<script src="<?php echo base_url('assets/jquery/jquery-2.2.3.min.js')?>"></script>
+<script src="<?php echo base_url('assets/datatables/js/jquery.dataTables.min.js')?>"></script>
+<?php /* <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.js"></script>
+ */ ?>
 <script type='text/javascript'>
 jQuery(document).ready(function($){
-$("#usersform").on('submit',(function(e) {
-        e.preventDefault();
-				var p = $(this).find('input[name=pubpesquisar]').val();
-				
-                $.post("<?php echo base_url(); ?>admin/loadusers", {
-                p:p,
-                <?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'				
-                },
-                function(data){
-                    $("#usersarea").html(data);
-				});
-        return false;		
-}));
-$('input[name=pubpesquisar]').change(function() { $('#usersform').submit(); });
-$('#usersform').submit();
+        
+							$('#datatable').DataTable({
+								
+								dom: 'Bfrtip',
+								buttons: [
+									'csv','pdf'
+								]
+								
+							}); // ini yang buat datatables nya ya   <<<--------
 });
 </script>
+
