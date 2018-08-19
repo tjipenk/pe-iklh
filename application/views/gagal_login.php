@@ -10,8 +10,8 @@
 <div class="container text-cente" id="depan" style="height:100%;padding:60px 0 20px">
    <div class="">
 <div class="col-md-8" id="depan-konten" style="padding:20px 20px">
-      <h1 class="depan-konten">Masuk ke Simfoni</h1><br/>
-      <h3 class="depan-konten hidden-xs hidden-sm"><cente>Masuk untuk mengakses fitur simfoni secara lengkap</cente></h3>
+<h1 class="depan-konten">Masuk ke Sistem Aplikasi IKLH</h1><br/>
+      <h3 class="depan-konten hidden-xs hidden-sm"><cente>Masuk untuk mengakses Aplikasi secara lengkap</cente></h3>
     	 <br/>
 	
 </div>
@@ -23,7 +23,7 @@
 			
 			<br />
 			<div class="append-icon">
-				<input style="border-bottom:0px"type="text" name="username" id="username" class="form-control form-white username" placeholder="E-mail" required="">
+				<input style="border-bottom:0px"type="text" name="username" id="username" class="form-control form-white username" placeholder="Username" required="">
 				
 			</div>
 			<div class="append-icon m-b-20">
