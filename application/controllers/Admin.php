@@ -29,7 +29,7 @@ private $user_id = "";
 		$sel['sel'] = "dashboard";
 		//$p = $this->input->post('p');
 		
-		$data['sungai'] = $this->admin_model->get_ika();		
+		$data['sungai'] = $this->admin_model->get_ika_dashboard();		 
 		
 		//print_r($data);
   		$this->load->view('layout/header');
