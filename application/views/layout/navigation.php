@@ -8,7 +8,17 @@
         $grav_url = "http://www.gravatar.com/avatar/" . md5( strtolower( trim( $email ) ) ) . "?d=" . urlencode( $default ) . "&s=" . $size;
     }    
 ?>
+<style>
+.dropdown-submenu {
+    position: relative;
+}
 
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+}
+</style>
 <nav class="navbar navbar-findcond" style="position:fixed;top:0;left:0;right:0;z-index:1000">
   <div class="container">
     <div class="navbar-header">
@@ -28,7 +38,14 @@
                <li><a href="<?php echo base_url(); ?>admin/dashboard">Dashboard IKA Nasional</a></li> 
                <li><a href="<?php echo base_url(); ?>admin/daftar_sungai">Daftar Lokasi Sungai</a></li> 
                <li><a href="<?php echo base_url(); ?>admin/parameter_sungai">Parameter Air</a></li>
-               <li><a href="<?php echo base_url(); ?>admin/data_sungai">Data Pemantauan</a></li>
+               <li class="dropdown-submenu">
+                    <a class="datasungai" data-toggle="dropdown-submenu" href="#">Data Pemantauan</a>
+                    <ul class="dropdown-menu">
+                    <li><a href="<?php echo base_url(); ?>admin/data_sungai/<?php echo date("Y",strtotime("-2 year"));?>"><?php echo date("Y",strtotime("-2 year"));?></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/data_sungai/<?php echo date("Y",strtotime("-1 year"));?>"><?php echo date("Y",strtotime("-1 year"));?></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin/data_sungai/<?php echo date('Y');?>"><?php echo date('Y');?></a></li>
+                    </ul>
+                </li>
           </ul>
         </li>
 
@@ -105,3 +122,13 @@
     </div>
   </div>
 </nav>
+
+<script>
+$(document).ready(function(){
+  $('.dropdown-submenu a.datasungai').on("click", function(e){
+    $(this).next('ul').toggle();
+    e.stopPropagation();
+    e.preventDefault();
+  });
+});
+</script>

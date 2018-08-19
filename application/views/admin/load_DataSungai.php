@@ -37,7 +37,7 @@
 														}
 													?>
                                                             <td hidden><?php echo $pub['nama']; ?></td>
-                                                            <td><?php echo $pub['lokasi']; ?></td>
+                                                            <td><?php echo $this->admin_model->get_nama_wilayah($pub['id_prov'])[0]['nama'].'; '.$pub['kode_sungai'].'; '.$pub['lokasi']; ?></td>
                                                             <td><?php echo $pub['tanggal']; ?></td>
                                                             <td><?php echo $pub['tss'];?></td>
                                                             <td><?php echo $pub['do'];?></td>																				

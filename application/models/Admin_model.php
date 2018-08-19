@@ -73,7 +73,7 @@ class Admin_model extends CI_Model
 		return $query->result_array();
 
 	}
-
+	/*
 	public function get_data_sungai($offset = null, $search = "", $filter = "Popular", $all = "") 
 	{
 		$this->db->order_by("kode_sungai", "desc");			
@@ -87,6 +87,19 @@ class Admin_model extends CI_Model
 		return $query->result_array();
 
 	}
+	*/
+	public function get_data_sungai($year) {
+		$this->db->select('*');
+		$this->db->from('tbl_sungai');
+		//$this->db->where('id_prov',$i);
+		$this->db->where('year(tanggal)',$year);
+		
+		//$this->db->limit(1);
+		$query = $this->db->get();
+		 return $query->result_array();
+		//var_dump($query->first_row());
+	}
+
 
 	public function get_kelompok_tani($offset = null, $search = "", $filter = "Popular", $all = "") 
 	{
@@ -410,6 +423,7 @@ class Admin_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from('tbl_sungai');
 		$this->db->where('id_sungai',$i);
+		$this->db->where('validated',1);
 		$this->db->limit(1);
 		$query = $this->db->get();
 		 return $query->result_array();
@@ -422,6 +436,7 @@ class Admin_model extends CI_Model
 		$this->db->from('tbl_sungai');
 		$this->db->where('id_sungai',$i);
 		$this->db->where('year(tanggal)',$year);
+		$this->db->where('validated',1);
 		$this->db->limit(1);
 		$query = $this->db->get();
 		 return $query->result_array();

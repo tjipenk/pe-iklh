@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Admin extends CI_Controller {
 private $user_id = "";
+
 	function __construct()
 	{
 		parent::__construct();
@@ -15,7 +16,8 @@ private $user_id = "";
 
 		$this->user_id = $this->session->userdata('userid');
 		if (!$this->admin_model->check_admin()) redirect('/', 'location'); //die("admin only");
-        
+		
+	
 	}
     /* dashboard */
 	public function index() 
@@ -200,19 +202,21 @@ private $user_id = "";
 
 	public function data_sungai()
 	{
+		$year = $this->uri->segment('3');
 		$sel['sel'] = "data_sungai";
-	
+		if (isset($year)){$data['tahun'] = $year;} else {$data['tahun'] = date("Y");}
+		
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation', $sel);
-        $this->load->view('admin/data_sungai');
+        $this->load->view('admin/data_sungai',$data);
         $this->load->view('layout/footer');
 	}
 
-	public function load_data_sungai()
+	public function load_data_sungai($years)
 	{
-		$p = $this->input->post('p');
+		//$p = $this->input->post('p');
 		
-		$data['sungai'] = $this->admin_model->get_data_sungai('', $p, '', 'all');		
+		$data['sungai'] = $this->admin_model->get_data_sungai($years);		
 		
 		// $this->load->view('admin/ajaxcontent/loadDataSungai', $data);
 		$this->load->view('admin/load_DataSungai', $data);

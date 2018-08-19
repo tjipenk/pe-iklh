@@ -37,7 +37,7 @@
 														}
 													?>
                                                             <td hidden><?php echo $pub['nama']; ?></td>
-                                                            <td><?php echo $pub['lokasi']; ?></td>
+                                                            <td><?php echo $pub['kode_sungai'].'; '.$pub['lokasi']; ?></td>
                                                             <td><?php echo $pub['tanggal']; ?></td>
                                                             <td><?php echo $pub['tss'];?></td>
                                                             <td><?php echo $pub['do'];?></td>																				
