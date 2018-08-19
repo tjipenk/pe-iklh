@@ -1,12 +1,7 @@
-<?php
-	$default = $this->option_model->get_value('appusernophoto');
-	$size = 30;
-?>
-<table class="table">
+
+<table class="table datatable table-striped" id="datatable">
                                         <thead>
                                             <tr>
-                                                <th class="hidden hidden-sd hidden-xs" colspan="2" align="right">Option</th>
-                                                
                                                 <th colspan="2" align="right">Option</th>
                                                 <th></th>
                                                 <th>Lokasi</th>
@@ -33,15 +28,11 @@
 
 
                                                         <tr data-id="<?php echo $pub['id_sungai']; ?>">
-                                                            <!--<th class="hidden hidden-sd hidden-xs"><a style="cursor:pointer;" class="removerutilizador"><span class="label label-danger">Hapus</span></a></th>
-                                                            <th class="hidden hidden-sd hidden-xs"><a style="cursor:pointer;" class="editstory" href="<?php echo base_url(); ?>input/editsungai/<?php echo $pub['id_sungai']; ?>"><span class="label label-warning">Edit</span></a></th>
-                                                            -->
+                                                            
 															<th><a style="cursor:pointer;" class="removerutilizador"><span class="label label-danger">Hapus</span></a></th>
-															
-															<!--<th><a style="cursor:pointer;" href="<?php echo base_url(); ?>lap_prov/removesungaidata/<?php echo $pub['id_sungai']; ?>"><span class="label label-danger">Hapus</span></a></th>
-                                                            --><th><a style="cursor:pointer;" class="editstory" href="<?php echo base_url(); ?>lap_prov/editsungai/<?php echo $pub['id_sungai']; ?>"><span class="label label-warning">Edit</span></a></th>
+															<th><a style="cursor:pointer;" class="editstory" href="<?php echo base_url(); ?>lap_prov/editsungai/<?php echo $pub['id_sungai']; ?>"><span class="label label-warning">Edit</span></a></th>
                                                             <td><?php echo $pub['id_sungai']; ?></td>
-															<td><?php echo $pub['lokasi']; ?></td>
+															<td><?php echo $pub['kode_sungai'].'; '.$pub['lokasi']; ?></td>
                                                             <td><?php echo $pub['tanggal']; ?></td>
                                                             <td><?php echo $pub['tss'];?></td>
                                                             <td><?php echo $pub['do'];?></td>																				
