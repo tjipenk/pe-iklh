@@ -2,6 +2,7 @@
 ## perbaikan terakhir dari 
 
 ## Tambahan session mysql
+```
 CREATE TABLE IF NOT EXISTS `ci_sessions` (
         `id` varchar(128) NOT NULL,
         `ip_address` varchar(45) NOT NULL,
@@ -9,3 +10,4 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
         `data` blob NOT NULL,
         KEY `ci_sessions_timestamp` (`timestamp`)
 );
+```
