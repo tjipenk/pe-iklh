@@ -454,6 +454,18 @@ class Admin_model extends CI_Model
 		//var_dump($query->first_row());
 	}
 
+	public function get_data_sungai_prov_years($i,$year) {
+		$this->db->select('*');
+		$this->db->from('tbl_sungai');
+		$this->db->where('id_prov',$i);
+		$this->db->where('validated',1);
+		$this->db->where('year(tanggal)',$year);
+		//$this->db->limit(1);
+		$query = $this->db->get();
+		 return $query->result_array();
+		//var_dump($query->first_row());
+	}
+
 	public function perbaikan_log($a){
 		if ($a > 1){
 			$a = 1+5*log10($a);
@@ -466,7 +478,7 @@ class Admin_model extends CI_Model
 		//$year = date("Y");
 		//$data = $this->get_pengamatan_sungai_years($i, $year);
 		$data = $this->get_pengamatan_sungai($i);
-		
+		if(count($data)!=0){
 		$par = $this->get_par_ika();
 		
 		$cal = array('id_sungai' => $data[0]['id_sungai'],
@@ -510,6 +522,10 @@ class Admin_model extends CI_Model
 				$cal['ika'] = 20;
 				break;
 			}
+		}
+		else{
+			$cal['ika'] = 0;
+		}
 		//var_dump($cal);
 		return $cal;
 	}
@@ -596,177 +612,32 @@ public function hitung_ika_year($i,$year)
 	return $cal;
 }
 
-	public function hitung_ika1($i)
-	{
-		$year = date("Y");
-		$data = $this->get_pengamatan_sungai_years($i, $year);
-		$par = $this->get_par_ika();
-		
-		$cal = array('id_sungai' => $data[0]['id_sungai'],
-					 'id_par' => $par[0]['id'],
-					 'tss'    => $data[0]['tss']/$par[0]['tss'],
-					 'do'  	  => $par[0]['do']/$data[0]['do'],
-					 'bod' 	  => $data[0]['bod']/$par[0]['bod'],
-					 'cod' 	  => $data[0]['cod']/$par[0]['cod'],
-					 'tf'	  => $data[0]['tf']/$par[0]['tf'],
-					 'fcoli'  => $data[0]['fcoli']/$par[0]['fcoli'],
-					 'tcoli'  => $data[0]['tcoli']/$par[0]['tcoli']);
-
-		$cal['tss'] 	= $this->perbaikan_log($cal['tss'] );
-		$cal['do'] 		= $this->perbaikan_log($cal['do'] );
-		$cal['bod'] 	= $this->perbaikan_log($cal['bod'] );
-		$cal['cod'] 	= $this->perbaikan_log($cal['cod'] );
-		$cal['tf'] 		= $this->perbaikan_log($cal['tf'] );
-		$cal['fcoli'] 	= $this->perbaikan_log($cal['fcoli'] );
-		$cal['tcoli'] 	= $this->perbaikan_log($cal['tcoli'] );
-							 	
-		$cal['avg']	  	= ($cal['tss']+$cal['do']+$cal['bod']+$cal['cod']+$cal['tf']+$cal['fcoli']+$cal['tcoli'])/7;
-		$cal['max']   	= max($cal['tss'],$cal['do'],$cal['bod'],$cal['cod'],$cal['tf'],$cal['fcoli'],$cal['tcoli']);
-		$cal['avg2'] 	= $cal['avg']*$cal['avg'];
-		$cal['max2'] 	= $cal['max']*$cal['max'];
-		$cal['Pij'] 	= sqrt(($cal['avg2']+$cal['max2'])/2);
-		
-		switch (true) {
-			case $cal['Pij'] <=1 :
-				$cal['ika'] = 100;
-				break;
-			case $cal['Pij'] <=4.67:
-				$cal['ika'] = 80;
-				break;
-			case $cal['Pij'] <=6.32:
-				$cal['ika'] = 60;
-				break;
-			case $cal['Pij'] <=6.88:
-				$cal['ika'] = 40;
-				break;
-			case $cal['Pij'] >=6.88:
-				$cal['ika'] = 20;
-				break;
-			}
-		//var_dump($cal);
-
-		return $cal;
-	}
-	public function hitung_ika2($i)
-	{
-		$year = date("Y",strtotime("-1 year"));
-		$data = $this->get_pengamatan_sungai_years($i, $year);
-		$par = $this->get_par_ika();
-		
-		$cal = array('id_sungai' => $data[0]['id_sungai'],
-					 'id_par' => $par[0]['id'],
-					 'tss'    => $data[0]['tss']/$par[0]['tss'],
-					 'do'  	  => $par[0]['do']/$data[0]['do'],
-					 'bod' 	  => $data[0]['bod']/$par[0]['bod'],
-					 'cod' 	  => $data[0]['cod']/$par[0]['cod'],
-					 'tf'	  => $data[0]['tf']/$par[0]['tf'],
-					 'fcoli'  => $data[0]['fcoli']/$par[0]['fcoli'],
-					 'tcoli'  => $data[0]['tcoli']/$par[0]['tcoli']);
-
-		$cal['tss'] 	= $this->perbaikan_log($cal['tss'] );
-		$cal['do'] 		= $this->perbaikan_log($cal['do'] );
-		$cal['bod'] 	= $this->perbaikan_log($cal['bod'] );
-		$cal['cod'] 	= $this->perbaikan_log($cal['cod'] );
-		$cal['tf'] 		= $this->perbaikan_log($cal['tf'] );
-		$cal['fcoli'] 	= $this->perbaikan_log($cal['fcoli'] );
-		$cal['tcoli'] 	= $this->perbaikan_log($cal['tcoli'] );
-							 	
-		$cal['avg']	  	= ($cal['tss']+$cal['do']+$cal['bod']+$cal['cod']+$cal['tf']+$cal['fcoli']+$cal['tcoli'])/7;
-		$cal['max']   	= max($cal['tss'],$cal['do'],$cal['bod'],$cal['cod'],$cal['tf'],$cal['fcoli'],$cal['tcoli']);
-		$cal['avg2'] 	= $cal['avg']*$cal['avg'];
-		$cal['max2'] 	= $cal['max']*$cal['max'];
-		$cal['Pij'] 	= sqrt(($cal['avg2']+$cal['max2'])/2);
-		
-		switch (true) {
-			case $cal['Pij'] <=1 :
-				$cal['ika'] = 100;
-				break;
-			case $cal['Pij'] <=4.67:
-				$cal['ika'] = 80;
-				break;
-			case $cal['Pij'] <=6.32:
-				$cal['ika'] = 60;
-				break;
-			case $cal['Pij'] <=6.88:
-				$cal['ika'] = 40;
-				break;
-			case $cal['Pij'] >=6.88:
-				$cal['ika'] = 20;
-				break;
-			}
-		//var_dump($cal);
-		return $cal;
-	}
-	public function hitung_ika3($i)
-	{
-		$year = date("Y",strtotime("-2 year"));
-		$data = $this->get_pengamatan_sungai_years($i, $year);
-		$par = $this->get_par_ika();
-		
-		$cal = array('id_sungai' => $data[0]['id_sungai'],
-					 'id_par' => $par[0]['id'],
-					 'tss'    => $data[0]['tss']/$par[0]['tss'],
-					 'do'  	  => $par[0]['do']/$data[0]['do'],
-					 'bod' 	  => $data[0]['bod']/$par[0]['bod'],
-					 'cod' 	  => $data[0]['cod']/$par[0]['cod'],
-					 'tf'	  => $data[0]['tf']/$par[0]['tf'],
-					 'fcoli'  => $data[0]['fcoli']/$par[0]['fcoli'],
-					 'tcoli'  => $data[0]['tcoli']/$par[0]['tcoli']);
-
-		$cal['tss'] 	= $this->perbaikan_log($cal['tss'] );
-		$cal['do'] 		= $this->perbaikan_log($cal['do'] );
-		$cal['bod'] 	= $this->perbaikan_log($cal['bod'] );
-		$cal['cod'] 	= $this->perbaikan_log($cal['cod'] );
-		$cal['tf'] 		= $this->perbaikan_log($cal['tf'] );
-		$cal['fcoli'] 	= $this->perbaikan_log($cal['fcoli'] );
-		$cal['tcoli'] 	= $this->perbaikan_log($cal['tcoli'] );
-							 	
-		$cal['avg']	  	= ($cal['tss']+$cal['do']+$cal['bod']+$cal['cod']+$cal['tf']+$cal['fcoli']+$cal['tcoli'])/7;
-		$cal['max']   	= max($cal['tss'],$cal['do'],$cal['bod'],$cal['cod'],$cal['tf'],$cal['fcoli'],$cal['tcoli']);
-		$cal['avg2'] 	= $cal['avg']*$cal['avg'];
-		$cal['max2'] 	= $cal['max']*$cal['max'];
-		$cal['Pij'] 	= sqrt(($cal['avg2']+$cal['max2'])/2);
-		
-		switch (true) {
-			case $cal['Pij'] <=1 :
-				$cal['ika'] = 100;
-				break;
-			case $cal['Pij'] <=4.67:
-				$cal['ika'] = 80;
-				break;
-			case $cal['Pij'] <=6.32:
-				$cal['ika'] = 60;
-				break;
-			case $cal['Pij'] <=6.88:
-				$cal['ika'] = 40;
-				break;
-			case $cal['Pij'] >=6.88:
-				$cal['ika'] = 20;
-				break;
-			}
-		//var_dump($cal);
-		return $cal;
-	}
-	public function get_ika_dashboard() 
+public function get_ika_dashboard() 
 	{
 
 		$r_prov = $this->data_provinsi();
 		$m = 0;
 		foreach ($r_prov as $prov){
-			$r_sungai = $this->get_data_sungai_prov($prov['id_prov']);
+			$r_sungai0 = $this->get_data_sungai_prov_years($prov['id_prov'],date("Y"));
+			$r_sungai1 = $this->get_data_sungai_prov_years($prov['id_prov'],date("Y",strtotime("-1 year")));
+			$r_sungai2 = $this->get_data_sungai_prov_years($prov['id_prov'],date("Y",strtotime("-2 year")));
 			$ika = 0; $n = 0;
 			$ika1 = 0; $n1 = 0;
 			$ika2 = 0; $n2 = 0;
-				foreach ($r_sungai as $sungai){
-				
+				foreach ($r_sungai0 as $sungai){
 				//	print_r($this->hitung_ika($sungai['id_sungai']));
-					$ika = $ika + $this->hitung_ika_year($sungai['id_sungai'],date("Y"))['ika'];
+					$ika = $ika + $this->hitung_ika($sungai['id_sungai'])['ika'];
 					$n = $n+1;
-					$ika1 = $ika1 + $this->hitung_ika_year($sungai['id_sungai'],date("Y",strtotime("-1 year")))['ika'];
+				}
+				foreach ($r_sungai1 as $sungai){
+					$ika1 = $ika1 + $this->hitung_ika($sungai['id_sungai'])['ika'];
 					$n1 = $n1+1;
-					$ika2 = $ika2 + $this->hitung_ika_year($sungai['id_sungai'],date("Y",strtotime("-2 year")))['ika'];
+				}
+				foreach ($r_sungai2 as $sungai){
+					$ika2 = $ika2 + $this->hitung_ika($sungai['id_sungai'])['ika'];
 					$n2 = $n2+1;
 				}
+
 				$result[$m] = array('id_prov' => $prov['id_prov'],
 							'provinsi' => $prov['prov'],
 							'ika'	=>	$ika/$n,
