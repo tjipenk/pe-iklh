@@ -366,7 +366,7 @@ private $user_id = "";
            	$datains2['fcoli'] = $fcoli;
 			$datains2['tcoli'] = $tcoli;
 			$datains2['ket'] = $deskripsi;
-			$datains2['validated'] = 1;
+			//$datains2['validated'] = 1;
 			$datains2['tanggal'] = $tanggal;
 			$datains2['date_input'] = date("Y-m-d H:i:s");
 			
