@@ -93,7 +93,7 @@
                                 <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
                                 <p class="pull-left m-t-20">
 
-                                    <button type="submit" id="submit-form" class="button btn m-t-20 button-green">Edit petugas</button></p>
+                                    <button type="submit" id="submit-form" class="button btn m-t-20 button-green" style="background: #2B3643;color: #fff;margin:-20px 0 30px 0">Edit petugas</button></p>
                                 <p class="pull-right m-t-20"><a href="<?php echo base_url() ?>"><?php echo $this->lang->line('cancel_button'); ?></a></p>
                             </div>
 

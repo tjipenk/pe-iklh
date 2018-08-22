@@ -59,7 +59,13 @@ class Login extends CI_Controller {
 				{
                     $arr['result'] = 'error';
                     $arr['message'] .= '<li>'. $this->lang->line('email_pass_invalid') .'</li>';
-                    echo json_encode($arr);
+                    echo json_encode($arr);       
+                    $data['active']         = "login";
+        
+                    $this->load->view('header', $data);
+                        //$this->load->view('navigation');
+                    $this->load->view('gagal_login'); 
+                    $this->load->view('footer');
                     return false;
                 }
 
@@ -105,7 +111,11 @@ class Login extends CI_Controller {
                     $arr['result'] = 'error';
                     $arr['message'] .= '<li>'.$this->lang->line('email_pass_invalid').'</li>';
                     echo json_encode($arr);
+                    
+                    $data['active']         = "login";
+        
                     $this->load->view('header', $data);
+                    
             //$this->load->view('navigation');
             $this->load->view('gagal_login'); 
                 

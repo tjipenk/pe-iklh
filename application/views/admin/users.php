@@ -44,7 +44,8 @@
                                                                     echo $prov[0]['nama'];?></td>
                                                             <td><?php echo $pub['user_level'];?></td>
                                                         <?php    if($this->session->userdata('logged_in')) {
-                                                            echo "<td> <a class='btn' style='background: #2B3643;color: #fff' href='".base_url()."admin/edit_user/".$pub['user_id']."'>Edit</a> </td>"; 
+                                                            echo "<td> <a style='cursor:pointer;' class='removerutilizador'><span class='label label-danger'>Hapus</span></a>";
+                                                            echo "<a style='cursor:pointer;' class='editstory' href='".base_url()."admin/edit_user/".$pub['user_id']."'><span class='label label-warning'>Edit</span></a></a> </td>"; 
                                                         } ?>
 
      																									
@@ -55,7 +56,7 @@
 
                                                     <?php else: ?>
 
-                                                    No Data Sungai.
+                                                    No Data Petugas.
 
                                                     <?php endif; ?>
 
@@ -81,6 +82,23 @@ jQuery(document).ready(function($){
 								]
 								
 							}); // ini yang buat datatables nya ya   <<<--------
+
+    jQuery('a.removerutilizador').click(function() 
+	{
+			if (confirm('Are you sure do you want delete?')) {
+				var i = $(this).parent().parent().attr('data-id');
+				$(this).parent().parent().remove();
+				
+				
+				$.post("<?php echo base_url(); ?>admin/removeuser", {
+                i:i,
+                <?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'
+                },
+                function(data){
+				});
+				return false;			
+			}			
+	});
 });
 </script>
 
