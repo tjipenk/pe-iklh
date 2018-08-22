@@ -157,7 +157,26 @@ private $user_id = "";
 			
 			
 			$deskripsi 	=  $_POST['deskripsi'];
-
+			// filename
+			$names = '';
+			$filename = basename($_FILES['filename']['name']);
+			$ext = substr($filename, strrpos($filename, '.') + 1);
+			if ($filename != '')
+			{
+				$filename = basename($_FILES['filename']['name']);
+				$ext = substr($filename, strrpos($filename, '.') + 1);
+				$date = new DateTime();
+				$tgl = $date->format('YmdHis');
+				$name = 'upload/' . $id . $tgl . '.' . $ext;
+				$names = $id . $tgl . '.' . $ext;
+				move_uploaded_file($_FILES["filename"]['tmp_name'], $name);
+				$uploadFile = 1;
+			} else
+			{
+				$names = 'kosong';
+				$uploadFile = 0;
+			}
+			
 			$datains2['tss'] = $tss;
             $datains2['do'] = $do;
             $datains2['bod'] = $bod;
@@ -166,13 +185,14 @@ private $user_id = "";
            	$datains2['fcoli'] = $fcoli;
 			$datains2['tcoli'] = $tcoli;
 			$datains2['ket'] = $deskripsi;
+			$datains2['file'] = $names;
 			#echo "<pre>";print_r($datains2);echo "</pre>";exit();
 			$this->db->where('id_sungai', $id);
 			$this->db->update('tbl_sungai', $datains2); 
 			
 			//print_r($datains2);
-			
-			echo "add";	 
+			redirect('lap_prov/data_sungai');
+			//echo "add";	 
 	}
 	public function data_sungai()
 	{
@@ -319,11 +339,27 @@ private $user_id = "";
 			$tf 	=	$_POST['tp'];
 			$fcoli 	=	$_POST['fcoli'];
 			$tcoli 	=	$_POST['tcoli'];
-			
-			
 			$deskripsi 	=  $_POST['deskripsi'];
-
-
+			// filename
+			$names = '';
+			$filename = basename($_FILES['filename']['name']);
+			$ext = substr($filename, strrpos($filename, '.') + 1);
+			if ($filename != '')
+			{
+				$filename = basename($_FILES['filename']['name']);
+				$ext = substr($filename, strrpos($filename, '.') + 1);
+				$date = new DateTime();
+				$tgl = $date->format('YmdHis');
+				$name = 'upload/' . $sungai . $tgl . '.' . $ext;
+				$names = $sungai . $tgl . '.' . $ext;
+				move_uploaded_file($_FILES["filename"]['tmp_name'], $name);
+				$uploadFile = 1;
+			} else
+			{
+				$names = 'kosong';
+				$uploadFile = 0;
+			}
+			#echo"<pre>".print_r($_FILES,true)."</pre>";
 			$datains2['lokasi'] = $lokasi;
 			$datains2['kode_sungai'] = $sungai;
 			$datains2['tanggal'] = $tanggal;
@@ -341,12 +377,14 @@ private $user_id = "";
            	$datains2['fcoli'] = $fcoli;
 			$datains2['tcoli'] = $tcoli;
 			$datains2['ket'] = $deskripsi;
+			$datains2['file'] = $names;
 			#echo "<pre>";print_r($datains2);echo "</pre>";exit();
 			$this->db->insert('tbl_sungai', $datains2); 
 
-			print_r($datains2);
+			//print_r($datains2);
 			
-			echo "add";	 
+			//echo "add";
+			redirect('lap_prov/data_sungai');
 	}
 
 
