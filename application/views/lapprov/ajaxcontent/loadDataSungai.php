@@ -13,6 +13,7 @@
 												<th>T-F</th>
 												<th>Fecal Coli</th>
 												<th>Total Coli</th>
+                                                <th>File</th>
 												<th>IKA</th>
                                                 
 
@@ -28,9 +29,13 @@
 
 
                                                         <tr data-id="<?php echo $pub['id_sungai']; ?>">
-                                                            
+                                                            <?php if($pub['validated']==0) { ?>
 															<th><a style="cursor:pointer;" class="removerutilizador"><span class="label label-danger">Hapus</span></a></th>
 															<th><a style="cursor:pointer;" class="editstory" href="<?php echo base_url(); ?>lap_prov/editsungai/<?php echo $pub['id_sungai']; ?>"><span class="label label-warning">Edit</span></a></th>
+                                                            <?php }
+                                                            else { ?>
+                                                                <th colspan="2"><strong>Verified</strong></th>
+                                                            <?php }?>
                                                             <td><?php echo $pub['id_sungai']; ?></td>
 															<td><?php echo $pub['kode_sungai'].'; '.$pub['lokasi']; ?></td>
                                                             <td><?php echo $pub['tanggal']; ?></td>
@@ -40,9 +45,20 @@
                                                             <td><?php echo $pub['cod'];?></td>																				
                                                             <td><?php echo $pub['tf'];?></td>																				
                                                             <td><?php echo $pub['fcoli'];?></td>
-                                                            <td><?php echo $pub['tcoli'];?></td>																				
+                                                            <td><?php echo $pub['tcoli'];?></td>
+                                                            <td align='center'><?php if($pub['file']=='kosong') { ?>
+                                                                <strong>No File</strong>
+                                                                <?php } else { ?>
+                                                                <a href="<?php echo base_url(); ?>upload/<?php echo $pub['file']; ?>" target="_blank"><img src="<?php echo base_url(); ?>images/file-icon.png" height="30px" width="30px" alt="View Data" title="View Data"  /></a>
+                                                                <?php } ?></td>																				
                                                             																				
-                                                            <td><?php echo ($this->lap_prov_model->hitung_ika($pub['id_sungai'])['ika'] ); ?></td>															
+                                                            <td align='center'><?php if($pub['validated']==0) {
+                                                                echo "diverifikasi";
+                                                            }
+                                                            else {
+                                                                echo ($this->lap_prov_model->hitung_ika($pub['id_sungai'])['ika']); 
+                                                            }
+                                                            ?></td>															
                                                         </tr>                                                        
                                                         
                                                         <?php endforeach; ?>

@@ -11,3 +11,10 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
         KEY `ci_sessions_timestamp` (`timestamp`)
 );
 ```
+## Tambahan fasilitas upload file by erlin
+```
+ALTER TABLE `tbl_sungai` ADD `file` VARCHAR(200) NOT NULL AFTER `kategori`;
+
+update tbl_sungai SET file='kosong' where file=''
+
+```
