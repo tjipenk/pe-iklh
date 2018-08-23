@@ -26,7 +26,14 @@
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Pemantauan Air<span class="caret"></span></a>
           <ul class="dropdown-menu">
                <li><a href="<?php echo base_url(); ?>admin_prov/daftar_sungai">Daftar Lokasi Sungai</a></li> 
-               <li><a href="<?php echo base_url(); ?>admin_prov/data_sungai">Data Pemantauan</a></li>
+               <li class="dropdown-submenu">
+                    <a class="datasungai" data-toggle="dropdown-submenu" href="#">Data Pemantauan</a>
+                    <ul class="dropdown-menu">
+                    <li><a href="<?php echo base_url(); ?>admin_prov/data_sungai/<?php echo date("Y",strtotime("-2 year"));?>"><?php echo date("Y",strtotime("-2 year"));?></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin_prov/data_sungai/<?php echo date("Y",strtotime("-1 year"));?>"><?php echo date("Y",strtotime("-1 year"));?></a></li>
+                    <li><a href="<?php echo base_url(); ?>admin_prov/data_sungai/<?php echo date('Y');?>"><?php echo date('Y');?></a></li>
+                    </ul>
+                </li>
           </ul>
         </li>
 

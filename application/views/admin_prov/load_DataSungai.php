@@ -13,6 +13,7 @@
 												<th>T-F</th>
 												<th>Fecal Coli</th>
 												<th>Total Coli</th>
+												<th>File</th>
 												<th>IKA</th>
                                                 
 
@@ -46,8 +47,17 @@
                                                             <td><?php echo $pub['tf'];?></td>																				
                                                             <td><?php echo $pub['fcoli'];?></td>
                                                             <td><?php echo $pub['tcoli'];?></td>																				
-                                                            																				
-                                                            <td><?php echo ($this->admin_model->hitung_ika($pub['id_sungai'])['ika'] ); ?></td>															
+                                                            <td align='center'><?php if($pub['file']=='kosong') { ?>
+                                                                <strong>No File</strong>
+                                                                <?php } else { ?>
+                                                                <a href="<?php echo base_url(); ?>upload/<?php echo $pub['file']; ?>" target="_blank"><img src="<?php echo base_url(); ?>images/file-icon.png" height="30px" width="30px" alt="View Data" title="View Data"  /></a>
+                                                                <?php } ?></td>		
+                                                                 																				
+                                                            <td align='center'><?php if($pub['validated']==0) {
+                                                                echo "diverifikasi";
+                                                            }
+                                                            else {echo ($this->admin_model->hitung_ika($pub['id_sungai'])['ika'] );
+                                                            } ?></td>															
                                                         </tr>        
                                             <?php endforeach; ?>
                                         <?php endif; ?>
