@@ -32,10 +32,12 @@ private $user_id = "";
     {
 		$sel['sel'] = "dashboard";
 		//$p = $this->input->post('p');
-		
-		$data['sungai'] = $this->admin_model->get_ika();		
-		
-		//print_r($data);
+		$year = $this->uri->segment('3');
+
+		if (isset($year)){$data['tahun'] = $year;} else {$data['tahun'] = date("Y");}
+
+		$data['sungai'] = $this->admin_model->get_ika($year);
+
   		$this->load->view('layout/header');
         $this->load->view('layout/navigation_prov', $sel);
         $this->load->view('admin_prov/dashboard_ika', $data);
