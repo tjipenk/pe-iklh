@@ -38,7 +38,7 @@ $("#usersform").on('submit',(function(e) {
         e.preventDefault();
 				var p = $(this).find('input[name=pubpesquisar]').val();
 				
-                $.post("<?php echo base_url(); ?>admin_prov/load_data_sungai", {
+                $.post("<?php echo base_url(); ?>admin_prov/load_data_sungai/<?php echo $tahun;?>", {
                 p:p,
                 <?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'				
                 },

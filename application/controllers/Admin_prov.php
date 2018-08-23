@@ -287,9 +287,13 @@ private $user_id = "";
     }
 	
 	public function daftar_sungai(){
+		$year = $this->uri->segment('3');
 		$sel['sel'] = "daftar_sungai";
-		$data['data_ika'] = $this->admin_model->get_ika();
+		if (isset($year)){$data['tahun'] = $year;} else {$data['tahun'] = date("Y");}
 	
+	//		$sel['sel'] = "data_sungai";
+		$data['data_ika'] = $this->admin_model->get_ika($year);
+		
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation_prov', $sel);
         $this->load->view('admin_prov/daftar_sungai', $data);
@@ -429,8 +433,12 @@ private $user_id = "";
 	}
 
 	public function data_sungai(){
+		$year = $this->uri->segment('3');
 		$sel['sel'] = "data_sungai";
-		$data['data_ika'] = $this->admin_model->get_ika();
+		if (isset($year)){$data['tahun'] = $year;} else {$data['tahun'] = date("Y");}
+	
+	//		$sel['sel'] = "data_sungai";
+		$data['data_ika'] = $this->admin_model->get_ika($year);
 	
 		$this->load->view('layout/header');
         $this->load->view('layout/navigation_prov', $sel);
@@ -438,11 +446,12 @@ private $user_id = "";
         $this->load->view('layout/footer');
 	}
 
-	public function load_data_sungai(){
+	public function load_data_sungai($years){
 		$p = $this->input->post('p');
 		
-		$data['sungai'] = $this->admin_model->get_data_sungai('', $p, '', 'all');		
-		
+		// $data['sungai'] = $this->admin_model->get_data_sungai('', $p, '', 'all');		
+		$data['sungai'] = $this->admin_model->get_data_sungai($years);		
+	
 		// $this->load->view('admin/ajaxcontent/loadDataSungai', $data);
 		$this->load->view('admin_prov/load_DataSungai', $data);
 	}

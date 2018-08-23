@@ -81,7 +81,7 @@ class Admin_prov_model extends CI_Model
 		return $query->result_array();
 
 	}
-
+	/*
 	public function get_data_sungai($offset = null, $search = "", $filter = "Popular", $all = "") 
 	{
 		# get prov
@@ -100,6 +100,22 @@ class Admin_prov_model extends CI_Model
 		if ($all == "all") { $query = $this->db->get('tbl_sungai'); } else { $query = $this->db->get('tbl_sungai', 10, $offset); }
 		return $query->result_array();
 
+	}
+	*/
+	public function get_data_sungai($year) {
+		$id_prov = $this->session->userdata("provinsi");
+
+		$this->db->select('*');
+		$this->db->from('tbl_sungai');
+		//$this->db->join('wilayah', 'wilayah.kode = tbl_sungai.id_prov');
+		$this->db->like('id_prov', $id_prov);		
+		//$this->db->where('id_prov',$i);
+		$this->db->where('year(tanggal)',$year);
+		
+		//$this->db->limit(1);
+		$query = $this->db->get();
+		 return $query->result_array();
+		//var_dump($query->first_row());
 	}
 
 	public function get_kelompok_tani($offset = null, $search = "", $filter = "Popular", $all = "") 
@@ -442,6 +458,18 @@ class Admin_prov_model extends CI_Model
 		 return $query->result_array();
 		//var_dump($query->first_row());
 	}
+	
+	public function get_data_sungai_prov_years($i,$year) {
+		$this->db->select('*');
+		$this->db->from('tbl_sungai');
+		$this->db->where('id_prov',$i);
+		$this->db->where('validated',1);
+		$this->db->where('year(tanggal)',$year);
+		//$this->db->limit(1);
+		$query = $this->db->get();
+		 return $query->result_array();
+		//var_dump($query->first_row());
+	}
 
 	public function perbaikan_log($a){
 		if ($a > 1){
@@ -453,6 +481,7 @@ class Admin_prov_model extends CI_Model
 	public function hitung_ika($i)
 	{
 		$data = $this->get_pengamatan_sungai($i);
+		if(count($data)!=0){
 		$par = $this->get_par_ika();
 		
 		$cal = array('id_sungai' => $data[0]['id_sungai'],
@@ -496,17 +525,21 @@ class Admin_prov_model extends CI_Model
 				$cal['ika'] = 20;
 				break;
 			}
+		}
+		else{
+			$cal['ika'] = 0;
+		}
 		//var_dump($cal);
 		return $cal;
 	}
 
-	public function get_ika() 
+	public function get_ika($year) 
 	{
-
+		
 		$r_prov = $this->data_provinsi();
 		$m = 0;
 		foreach ($r_prov as $prov){
-			$r_sungai = $this->get_data_sungai_prov($prov['id_prov']);
+			$r_sungai = $this->get_data_sungai_prov_years($prov['id_prov'],$year);
 			$ika = 0; $n = 0;
 				foreach ($r_sungai as $sungai){
 				
@@ -524,6 +557,7 @@ class Admin_prov_model extends CI_Model
 	
 		return $result;
 	}
+
     
 }
 
