@@ -7,19 +7,43 @@ class Home extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('stories_model');
-		$this->load->model('option_model');		
+		$this->load->model('option_model');	
+		$this->load->model('admin_model','admin_model');	
+
 		require_once APPPATH.'libraries/facebook/facebook.php';
 	}
 
 	public function index()
 	{
+		if($this->session->userdata('logged_in'))  {
+			switch ($this->session->userdata('level')){
+				case 1:
+				redirect('/admin/');
+
+				case 2:
+				redirect('/input/');
+
+				case 3:
+				redirect('/admin_prov/');
+
+				case 4:
+				redirect('/lap_prov/');
+				
+				default: 
+				redirect('/');
+
+			}
+
+		}
+		else {
+			$data = array();
+			$data['active'] 		= "home";
+			$data['sungai'] = $this->admin_model->get_ika_dashboard();		 
 		
-		$data = array();
-		$data['active'] 		= "home";
-		$this->load->view('header', $data);
-		$this->load->view('depan', $data);
+			$this->load->view('header', $data);
+			$this->load->view('depan', $data);
 			$this->load->view('footer');
-			
+		}
 	}
 	
 	

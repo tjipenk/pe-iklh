@@ -70,7 +70,21 @@ endif; } ?>
     <link href="<?php echo base_url(); ?>css/bootstrap.min.css" rel="stylesheet">    
 		<!-- scripts -->
 		<script src="<?php echo base_url(); ?>canvas/assets/js/jquery-3.1.0.min.js"></script>
-		<script src="<?php echo base_url(); ?>canvas/assets/js/bootstrap.min.js"></script>
+    <script src="<?php echo base_url(); ?>canvas/assets/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/datatables.min.css"/>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/datatables.min.js"></script>
+		<script type="text/javascript" src=""></script>
+		
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/DataTables-1.10.18/css/jquery.dataTables.min.css"/>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>assets/Buttons-1.5.2/css/buttons.dataTables.min.css"/>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/Buttons-1.5.2/js/dataTables.buttons.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/Buttons-1.5.2/js/buttons.flash.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/Buttons-1.5.2/js/buttons.html5.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/pdfmake-0.1.36/pdfmake.min.js"></script>
+		<script type="text/javascript" src="<?php echo base_url(); ?>assets/pdfmake-0.1.36/vfs_fonts.js"></script>
+		
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.min.css" rel="stylesheet">
 		<!--<script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>-->
 		<style>
@@ -602,7 +616,7 @@ box-shadow: 0px 3px 5px -3px rgba(0,0,0,0.75);
 
 <?php if ($this->option_model->check_admin()) {  ?>
                             <li class="divider"></li>
-                            <li><a href="<?php echo base_url(); ?>dashboard/petugas" style="color: #fff!important"><span style="color: #fff!important"class="glyph-icon flaticon-settings" aria-hidden="true"></span></a></li>
+                            <li><a href="<?php echo base_url(); ?>admin/petugas" style="color: #fff!important"><span style="color: #fff!important"class="glyph-icon flaticon-settings" aria-hidden="true"></span></a></li>
                             <?php } else { ?> 
 
                             <?php
@@ -747,7 +761,7 @@ if($this->session->userdata('logged_in')) { ?>
 <a href="<?php echo base_url();?>admin"> Admin IKLH</a>
 
 </li>
-<li class="link hide  menu-item-has-children <?php if($active=="register"){ echo "active";}?>">
+<li class="link menu-item-has-children <?php if($active=="register"){ echo "active";}?>">
 <a href="<?php echo base_url();?>user/register"> Tambah petugas</a>
 
 </li>
@@ -820,7 +834,8 @@ if($this->session->userdata('logged_in')) { ?>
 	<div id="mainmenu" class="row col-md-2">
 	</div>
 	<div id="mainmenu" class="col-md-6" style="padding-left:30px">
-	<ul class="nav nav-pills nav-stacked" id="menu-cari" style="background:#fff;border:1px solid #ccc">
+  <ul class="nav nav-pills nav-stacked" id="menu-cari" style="background:#fff;border:1px solid #ccc">
+  
   <li class="  menu-item-has-children <?php if($active=="kelompok_tani"){ echo "active";}?>">
 <a href="<?php echo base_url();?>dashboard/kelompok_tani">Kelompok tani</a>
 
@@ -848,7 +863,7 @@ if($this->session->userdata('logged_in')) { ?>
 </div>
 
 
-
+<?php /*
 
 <div id="myNav" class="overlay">
 
@@ -876,7 +891,7 @@ if($this->session->userdata('logged_in')) { ?>
   </div>
 
 </div>
-
+*/ ?>
 <!-- Use any element to open/show the overlay navigation menu -->
 
 
