@@ -25,8 +25,9 @@ display:none!important;}
                             <!--/ panel heading/header -->
                             <!-- panel body -->
                             <div class="panel-body">
-                                <form id="editdata" class="form-horizontal form-bordered">
-
+							<form id="editdata" class="form-horizontal form-bordered" action="<?php echo site_url('admin_prov/add_data_sungaidata'); ?>" method="post" enctype="multipart/form-data">
+                                <!--<form id="editdata" class="form-horizontal form-bordered">
+									-->
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Provinsi</label>
                                         <div class="col-sm-9">
@@ -57,9 +58,6 @@ display:none!important;}
 </select>
                                         </div>
                                     </div>
-
-                                 
-                                    
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">Tanggal</label>
                                         <div class="col-sm-9">
@@ -129,13 +127,22 @@ display:none!important;}
                                             <span class="help-block"></span>
                                         </div>
                                     </div>
-
+									<div id="uploadfile" class="form-group">
+										<label for="filename" class="col-sm-3 control-label">Attach File</label>
+										<div class="col-sm-9">
+											<div id="uploadfile" class="form-group" style="margin-left: 0px !important;">
+												<input type="file" id="filename" name="filename" class="form-control" readonly />
+												<span class="help-block"><strong>Allowed File Type</strong> : png, jpg, jpeg, pdf with </br><strong>Allowed File Size</strong> : 1 MB</span>
+												<span id="errorFile"></span>
+											</div>
+										</div>
+									</div>
                                     <div class="">
                                         <div class="form-group no-border">
                                             <label class="col-sm-3 control-label"></label>
                                             <div class="col-sm-9">
                                                 <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>" />
-                                                <button type="submit" class="btn btn-primary pull-right">Tambah</button>
+                                                <button id="btnTambah" type="submit" class="btn btn-primary pull-right">Tambah</button>
                                                 <a href="<?php echo site_url('admin_prov/data_sungai'); ?>">
 												<button type="button" class="btn btn-danger">Batal</button>
                                                 <br /><br /><span class="erro" style="color:red;"></span><br />
@@ -164,7 +171,7 @@ display:none!important;}
 
 
 
-   
+   /*
     $( document ).ready(function () {
       
         
@@ -185,6 +192,26 @@ return false;
 });
     
     });
+	*/
+	$(function(){
+		$('#filename').change(function(){
+			var f=this.files[0]
+			var ext = $('#filename').val().split('.').pop().toLowerCase();
+			if ((f.size>1024000) || (f.fileSize>1024000 ) || ($.inArray(ext, ['png','jpg','jpeg','pdf'])  < 0))
+			{
+				document.getElementById("uploadfile").className = "form-group has-error";
+				document.getElementById("errorFile").innerHTML = '<label class="help-block" generated="true" for="filename">WARNING! File size or File type is not Allowed.</label>';
+				document.getElementById("btnTambah").disabled = true;
+			}
+			else
+			{
+				document.getElementById("uploadfile").className = "form-group";
+				document.getElementById("errorFile").innerHTML = '';
+				document.getElementById("btnTambah").disabled = false;
+			}
+		})
+		
+	})	
   </script> 
 
                 
