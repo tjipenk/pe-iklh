@@ -580,6 +580,25 @@ private $user_id = "";
 			
 			
 			$deskripsi 	=  $_POST['deskripsi'];
+			// filename
+			$names = '';
+			$filename = basename($_FILES['filename']['name']);
+			$ext = substr($filename, strrpos($filename, '.') + 1);
+			if ($filename != '')
+			{
+				$filename = basename($_FILES['filename']['name']);
+				$ext = substr($filename, strrpos($filename, '.') + 1);
+				$date = new DateTime();
+				$tgl = $date->format('YmdHis');
+				$name = 'upload/' . $sungai . $tgl . '.' . $ext;
+				$names = $sungai . $tgl . '.' . $ext;
+				move_uploaded_file($_FILES["filename"]['tmp_name'], $name);
+				$uploadFile = 1;
+			} else
+			{
+				$names = 'kosong';
+				$uploadFile = 0;
+			}
 
 
 			$datains2['lokasi'] = $lokasi;
@@ -600,14 +619,14 @@ private $user_id = "";
 			$datains2['ket'] = $deskripsi;
 			//$datains2['validated'] = 1;
 			$datains2['date_input'] = date("Y-m-d H:i:s");
-			
+			$datains2['file'] = $names;
 			// print_r($datains2);die();
 			
 			$this->db->insert('tbl_sungai', $datains2); 
 
-			// print_r($datains2);
-			
-			echo "add";	 
+			//print_r($datains2);
+			redirect('admin_prov/data_sungai');
+			//echo "add";	 
 	}
 
 	function removedatasungai(){		
